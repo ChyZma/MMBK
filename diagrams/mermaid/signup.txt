@@ -1,0 +1,16 @@
+sequenceDiagram
+autonumber
+    User->>+WebServer: SignUp (email, username, password)
+    alt valid data
+        WebServer->>+UserDataManager: SignUp (email, username, password)
+        UserDataManager->>+UserDataBase: ManageUserData (email, username, password) 
+        UserDataBase->>-UserDataManager: success
+        UserDataManager->>-WebServer: token
+        WebServer->>User: token
+    else non-valid data
+        WebServer->>+UserDataManager: SignUp (email, username, password)
+        UserDataManager->>+UserDataBase: ManageUserData (email, username, password) 
+        UserDataBase->>-UserDataManager: failure
+        UserDataManager->>-WebServer: failure
+        WebServer->>-User: unsuccesful signup
+    end    

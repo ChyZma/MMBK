@@ -1,0 +1,16 @@
+sequenceDiagram
+autonumber
+    User->>+WebServer: UploadCAFF (caff)
+    alt succesful upload
+            WebServer->>+CAFFDataManager: UploadCAFF (caff)
+            CAFFDataManager->>+CAFFDataBase: ManageCAFF (upload, caff) 
+            CAFFDataBase->>-CAFFDataManager: successful
+            CAFFDataManager->>-WebServer: successful
+    WebServer->>User: successful upload
+    else unsuccesful upload
+            WebServer->>+CAFFDataManager: UploadCAFF (caff)
+            CAFFDataManager->>+CAFFDataBase: ManageCAFF (upload, caff) 
+            CAFFDataBase->>-CAFFDataManager: unsuccessful
+            CAFFDataManager->>-WebServer: unsuccessful
+    WebServer->>-User: unsuccessful upload
+    end

@@ -1,0 +1,16 @@
+sequenceDiagram
+autonumber
+    User->>+WebServer: QueryCAFF (query)
+    alt result
+            WebServer->>+CAFFDataManager: QueryCAFF (query)
+            CAFFDataManager->>+CAFFDataBase: ManageCAFF (query, query) 
+            CAFFDataBase->>-CAFFDataManager: listOfCaffs
+            CAFFDataManager->>-WebServer: listOfCaffs
+    WebServer->>User: listOfCaffs
+    else no result
+            WebServer->>+CAFFDataManager: QueryCAFF (query)
+            CAFFDataManager->>+CAFFDataBase: ManageCAFF (query, query) 
+            CAFFDataBase->>-CAFFDataManager: no result
+            CAFFDataManager->>-WebServer: no result
+    WebServer->>-User: no result
+    end

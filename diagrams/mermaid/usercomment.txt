@@ -1,0 +1,13 @@
+sequenceDiagram
+autonumber
+    User->>+WebServer: QueryCAFF (caffName, comment)
+    WebServer->>+CAFFDataManager: QueryCAFF (caffName, comment)
+    CAFFDataManager->>+CAFFDataBase: ManageCAFF (get, caffname)
+    alt getting data successfully
+        CAFFDataBase->>CAFFDataManager: caff
+        CAFFDataManager->>+CAFFDataManager: AddCommentToCaff (caff,comment)
+    else not getting data successfully
+        CAFFDataBase->>-CAFFDataManager: failure
+    end
+    CAFFDataManager->>-WebServer: unsuccesful
+    WebServer->>User: unsuccesful

@@ -1,0 +1,14 @@
+sequenceDiagram
+autonumber
+    Admin->>+WebServer: ModifyCAFFData (caff, modifiedData)
+    alt has admin permission
+            WebServer->>+CAFFDataManager: ModifyCAFFData (caff, modifiedData)
+            CAFFDataManager->>+CAFFDataBase: ModifyCAFFData (caff, modifiedData) 
+            CAFFDataBase->>-CAFFDataManager: success
+            CAFFDataManager->>-WebServer: success
+    WebServer->>Admin: success
+    else does not have admin permission
+            WebServer->>+CAFFDataManager: ModifyCAFFData (caff, modifiedData)
+            CAFFDataManager->>-WebServer: no permission
+    WebServer->>-Admin: no permission
+    end

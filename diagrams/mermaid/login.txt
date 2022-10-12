@@ -1,0 +1,16 @@
+sequenceDiagram
+autonumber
+    User->>+WebServer: LogIn (username, password)
+    alt matching credentials
+        WebServer->>+UserDataManager: LogIn (username, password)
+        UserDataManager->>+UserDataBase: ManageUserData (username, password)
+        UserDataBase->>-UserDataManager: match
+        UserDataManager->>-WebServer: token
+    WebServer->>User: token
+    else non-matching credentials
+        WebServer->>+UserDataManager: LogIn (username, password)
+        UserDataManager->>+UserDataBase: ManageUserData (username, password)
+        UserDataBase->>-UserDataManager: failure
+        UserDataManager->>-WebServer: failure
+        WebServer->>-User: wrong credentials
+    end   

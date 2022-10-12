@@ -1,0 +1,14 @@
+sequenceDiagram
+autonumber
+    Admin->>+WebServer: DeleteCAFF (caff)
+    alt has admin permission
+            WebServer->>+CAFFDataManager: DeleteCAFF (caff)
+            CAFFDataManager->>+CAFFDataBase: DeleteCAFF (caff) 
+            CAFFDataBase->>-CAFFDataManager: success
+            CAFFDataManager->>-WebServer: success
+    WebServer->>Admin: success
+    else does not have admin permission
+            WebServer->>+CAFFDataManager: DeleteCAFF (caff)
+            CAFFDataManager->>-WebServer: no permission
+    WebServer->>-Admin: no permission
+    end

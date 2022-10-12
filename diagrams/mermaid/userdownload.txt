@@ -1,0 +1,16 @@
+sequenceDiagram
+autonumber
+    User->>+WebServer: DownloadCAFF (user, caff)
+            WebServer->>+CAFFDataManager: DownloadCAFF (caff)
+            CAFFDataManager->>+CAFFDataBase: isUserOwner (user,caff)
+            alt is owner
+                CAFFDataBase->>CAFFDataManager: isOwner    
+                CAFFDataManager->>+CAFFDataBase: ManageCAFF (download, caff)
+                CAFFDataBase->>-CAFFDataManager: caff
+                CAFFDataManager->>WebServer:  caff
+                WebServer->>User: caff
+            else  is not owner
+                CAFFDataBase->>-CAFFDataManager: isNotOwner
+                CAFFDataManager->>-WebServer: isNotOwner
+            end
+    WebServer->>-User: unsuccessful upload
