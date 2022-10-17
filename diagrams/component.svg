@@ -94,7 +94,7 @@
     ><text x="5" xml:space="preserve" y="17.5312" clip-path="url(#clipPath2)" stroke="none"
       >Upload CAFF</text
     ></g
-    ><g fill="rgb(255,255,255)" fill-opacity="0" transform="translate(340,1020)" stroke-opacity="0" stroke="rgb(255,255,255)"
+    ><g fill="rgb(255,255,255)" fill-opacity="0.4902" transform="translate(340,1020)" stroke-opacity="0.4902" stroke="rgb(255,255,255)"
     ><path d="M0.5 0.5 L198.5 0.5 L209 12.5 L209 79 L0.5 79 Z" stroke="none" clip-path="url(#clipPath3)"
     /></g
     ><g transform="translate(340,1020)"
@@ -105,7 +105,7 @@
       ><text x="5" font-size="14px" y="33.0625" clip-path="url(#clipPath3)" font-family="sans-serif" stroke="none" xml:space="preserve"
       >integrity: User role, CAFF data</text
     ></g
-    ><g fill="rgb(255,255,255)" fill-opacity="0" transform="translate(330,560)" stroke-opacity="0" stroke="rgb(255,255,255)"
+    ><g fill="rgb(255,255,255)" fill-opacity="0.4902" transform="translate(330,560)" stroke-opacity="0.4902" stroke="rgb(255,255,255)"
     ><path d="M0.5 0.5 L198.5 0.5 L209 12.5 L209 79 L0.5 79 Z" stroke="none" clip-path="url(#clipPath3)"
     /></g
     ><g transform="translate(330,560)"
@@ -116,18 +116,7 @@
       ><text x="5" font-size="14px" y="33.0625" clip-path="url(#clipPath3)" font-family="sans-serif" stroke="none" xml:space="preserve"
       >integrity: CAFF data</text
     ></g
-    ><g fill="rgb(255,255,255)" fill-opacity="0" transform="translate(1330,850)" stroke-opacity="0" stroke="rgb(255,255,255)"
-    ><path d="M0.5 0.5 L198.5 0.5 L209 12.5 L209 79 L0.5 79 Z" stroke="none" clip-path="url(#clipPath3)"
-    /></g
-    ><g transform="translate(1330,850)"
-    ><path fill="none" d="M0.5 0.5 L198.5 0.5 L209 12.5 L209 79 L0.5 79 Z" clip-path="url(#clipPath3)"
-      /><path fill="none" d="M198.5 0.5 L198.5 12.5 L209 12.5" clip-path="url(#clipPath3)"
-      /><text x="5" font-size="14px" y="17.5312" clip-path="url(#clipPath3)" font-family="sans-serif" stroke="none" xml:space="preserve"
-      >« critical »</text
-      ><text x="5" font-size="14px" y="33.0625" clip-path="url(#clipPath3)" font-family="sans-serif" stroke="none" xml:space="preserve"
-      >integrity: CAFF files</text
-    ></g
-    ><g fill="rgb(255,255,255)" fill-opacity="0" transform="translate(1280,210)" stroke-opacity="0" stroke="rgb(255,255,255)"
+    ><g fill="rgb(255,255,255)" fill-opacity="0.4902" transform="translate(1280,210)" stroke-opacity="0.4902" stroke="rgb(255,255,255)"
     ><path d="M0.5 0.5 L198.5 0.5 L209 12.5 L209 79 L0.5 79 Z" stroke="none" clip-path="url(#clipPath3)"
     /></g
     ><g transform="translate(1280,210)"
@@ -174,7 +163,7 @@
     ><text x="5" xml:space="preserve" y="17.5312" clip-path="url(#clipPath2)" stroke="none"
       >Create User</text
     ></g
-    ><g fill="rgb(255,255,255)" fill-opacity="0" transform="translate(570,330)" stroke-opacity="0" stroke="rgb(255,255,255)"
+    ><g fill="rgb(255,255,255)" fill-opacity="0.4902" transform="translate(570,330)" stroke-opacity="0.4902" stroke="rgb(255,255,255)"
     ><rect x="0.5" width="998.5" height="688.5" y="0.5" clip-path="url(#clipPath4)" stroke="none"
     /></g
     ><g transform="translate(570,330)"
@@ -196,7 +185,7 @@
       /><text x="450" font-size="14px" y="26.7313" clip-path="url(#clipPath4)" font-family="sans-serif" stroke="none" xml:space="preserve"
       >CAFF Webshop</text
     ></g
-    ><g fill="rgb(255,255,255)" fill-opacity="0" transform="translate(1330,550)" stroke-opacity="0" stroke="rgb(255,255,255)"
+    ><g fill="rgb(255,255,255)" fill-opacity="0.4902" transform="translate(1330,550)" stroke-opacity="0.4902" stroke="rgb(255,255,255)"
     ><rect x="0.5" width="198.5" height="98.5" y="0.5" clip-path="url(#clipPath5)" stroke="none"
     /></g
     ><g transform="translate(1330,550)"
@@ -218,7 +207,7 @@
       /><text x="84" font-size="14px" y="26.7313" clip-path="url(#clipPath5)" font-family="sans-serif" stroke="none" xml:space="preserve"
       >Logs</text
     ></g
-    ><g fill="rgb(255,255,255)" fill-opacity="0" transform="translate(1330,390)" stroke-opacity="0" stroke="rgb(255,255,255)"
+    ><g fill="rgb(255,255,255)" fill-opacity="0.4902" transform="translate(1330,390)" stroke-opacity="0.4902" stroke="rgb(255,255,255)"
     ><rect x="0.5" width="198.5" height="98.5" y="0.5" clip-path="url(#clipPath5)" stroke="none"
     /></g
     ><g transform="translate(1330,390)"
@@ -240,7 +229,7 @@
       /><text x="53" font-size="14px" y="26.7313" clip-path="url(#clipPath5)" font-family="sans-serif" stroke="none" xml:space="preserve"
       >User Database</text
     ></g
-    ><g fill="rgb(255,255,255)" fill-opacity="0" transform="translate(1330,700)" stroke-opacity="0" stroke="rgb(255,255,255)"
+    ><g fill="rgb(255,255,255)" fill-opacity="0.4902" transform="translate(1330,700)" stroke-opacity="0.4902" stroke="rgb(255,255,255)"
     ><rect x="0.5" width="198.5" height="98.5" y="0.5" clip-path="url(#clipPath5)" stroke="none"
     /></g
     ><g transform="translate(1330,700)"
@@ -262,7 +251,7 @@
       /><text x="49" font-size="14px" y="26.7313" clip-path="url(#clipPath5)" font-family="sans-serif" stroke="none" xml:space="preserve"
       >CAFF Database</text
     ></g
-    ><g fill="rgb(255,255,255)" fill-opacity="0" transform="translate(750,700)" stroke-opacity="0" stroke="rgb(255,255,255)"
+    ><g fill="rgb(255,255,255)" fill-opacity="0.4902" transform="translate(750,700)" stroke-opacity="0.4902" stroke="rgb(255,255,255)"
     ><rect x="0.5" width="198.5" height="98.5" y="0.5" clip-path="url(#clipPath5)" stroke="none"
     /></g
     ><g transform="translate(750,700)"
@@ -284,7 +273,7 @@
       /><text x="37" font-size="14px" y="26.7313" clip-path="url(#clipPath5)" font-family="sans-serif" stroke="none" xml:space="preserve"
       >CAFF Datamanager</text
     ></g
-    ><g fill="rgb(255,255,255)" fill-opacity="0" transform="translate(750,890)" stroke-opacity="0" stroke="rgb(255,255,255)"
+    ><g fill="rgb(255,255,255)" fill-opacity="0.4902" transform="translate(750,890)" stroke-opacity="0.4902" stroke="rgb(255,255,255)"
     ><rect x="0.5" width="198.5" height="98.5" y="0.5" clip-path="url(#clipPath5)" stroke="none"
     /></g
     ><g transform="translate(750,890)"
@@ -306,7 +295,7 @@
       /><text x="41" font-size="14px" y="26.7313" clip-path="url(#clipPath5)" font-family="sans-serif" stroke="none" xml:space="preserve"
       >CAFF/CIFF Parser</text
     ></g
-    ><g fill="rgb(255,255,255)" fill-opacity="0" transform="translate(750,390)" stroke-opacity="0" stroke="rgb(255,255,255)"
+    ><g fill="rgb(255,255,255)" fill-opacity="0.4902" transform="translate(750,390)" stroke-opacity="0.4902" stroke="rgb(255,255,255)"
     ><rect x="0.5" width="198.5" height="98.5" y="0.5" clip-path="url(#clipPath5)" stroke="none"
     /></g
     ><g transform="translate(750,390)"
@@ -343,6 +332,17 @@
       /><circle fill="white" r="10" clip-path="url(#clipPath8)" cx="10.5" cy="10.5" stroke="none"
       /><circle stroke-linecap="square" clip-path="url(#clipPath8)" fill="none" r="10" stroke-dasharray="none" cx="10.5" cy="10.5" stroke-miterlimit="10"
     /></g
+    ><g fill="rgb(255,255,255)" fill-opacity="0.4902" transform="translate(1330,850)" stroke-opacity="0.4902" stroke="rgb(255,255,255)"
+    ><path d="M0.5 0.5 L198.5 0.5 L209 12.5 L209 79 L0.5 79 Z" stroke="none" clip-path="url(#clipPath3)"
+    /></g
+    ><g transform="translate(1330,850)"
+    ><path fill="none" d="M0.5 0.5 L198.5 0.5 L209 12.5 L209 79 L0.5 79 Z" clip-path="url(#clipPath3)"
+      /><path fill="none" d="M198.5 0.5 L198.5 12.5 L209 12.5" clip-path="url(#clipPath3)"
+      /><text x="5" font-size="14px" y="17.5312" clip-path="url(#clipPath3)" font-family="sans-serif" stroke="none" xml:space="preserve"
+      >« critical »</text
+      ><text x="5" font-size="14px" y="33.0625" clip-path="url(#clipPath3)" font-family="sans-serif" stroke="none" xml:space="preserve"
+      >integrity: CAFF files</text
+    ></g
     ><g stroke-dasharray="8,5" stroke-miterlimit="5" transform="translate(1320,280)" stroke-linecap="butt"
     ><path fill="none" d="M10.5 10.5 L10.5 109.5" clip-path="url(#clipPath9)"
       /><circle fill="white" r="10" clip-path="url(#clipPath9)" cx="10.5" cy="110.5" stroke="none"
