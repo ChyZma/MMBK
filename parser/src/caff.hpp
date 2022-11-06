@@ -1,0 +1,61 @@
+#ifndef CAFF_H
+#define CAFF_H
+
+#include <algorithm>
+#include <fstream>
+#include <string>
+
+#include <iostream> // TODO(mark): remove this when testing is done
+
+#include "common.hpp"
+
+struct CAFF_SIZES {
+  static const int id = 1;
+  static const int length = 8;
+  static const int total = id + length;
+};
+
+struct CAFF_HEADER_SIZES {
+  static const int magic = 4;
+  static const int header_size = 8;
+  static const int num_anim = 8;
+  static const int total = magic + header_size + num_anim;
+};
+
+struct CAFF_CREDITS_SIZES {
+  static const int year = 2;
+  static const int month = 1;
+  static const int day = 1;
+  static const int hour = 1;
+  static const int minute = 1;
+  static const int creator_len = 8;
+  static const int total = year + month + day + hour + minute + creator_len;
+};
+
+struct CAFF_ANIMATION_SIZES {
+  static const int duration = 8;
+};
+
+struct CaffCredits {
+  u32 year = -1;
+  u16 month = -1;
+  u16 day = -1;
+  u16 hour = -1;
+  u16 minute = -1;
+  u64 creator_len = -1;
+  std::string creator = "";
+};
+
+class Caff {
+private:
+  std::string path;
+  u64 num_anim = -1;
+  CaffCredits credits;
+
+public:
+  Caff(std::string path);
+  u16 parseBlock(std::vector<byte> block);
+  u16 parse();
+};
+
+#endif /* CAFF_H */
