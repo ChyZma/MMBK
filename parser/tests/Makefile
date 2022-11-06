@@ -12,7 +12,8 @@ SRC      := $(wildcard *.cpp)  $(filter-out ../src/main.cpp, $(APP_SRC))
 OBJECTS      := $(SRC:%.cpp=$(OBJ_DIR)/%.o)
 DEPENDENCIES := $(OBJECTS:.o=.d)
 
-all: info build $(TEST_DIR)/$(TARGET)
+all: info build $(TEST_DIR)/$(TARGET) assets
+	-@$(BUILD)/$(TARGET) --log_level=success
 
 $(OBJ_DIR)/%.o: %.cpp
 	@mkdir -p $(@D)
@@ -25,6 +26,12 @@ $(TEST_DIR)/$(TARGET): $(OBJECTS)
 -include $(DEPENDENCIES)
 
 .PHONY: all build clean debug release info
+
+assets:
+ifneq ($(wildcard ../assets/test),)
+		@mkdir -p $(TEST_DIR)/assets
+		@cp ../assets/tests/* $(TEST_DIR)/assets
+endif
 
 build:
 	@mkdir -p $(TEST_DIR)

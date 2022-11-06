@@ -11,7 +11,7 @@ SRC      := $(wildcard *.cpp)
 OBJECTS      := $(SRC:%.cpp=$(OBJ_DIR)/%.o)
 DEPENDENCIES := $(OBJECTS:.o=.d)
 
-all: info build $(APP_DIR)/$(TARGET)
+all: info build $(APP_DIR)/$(TARGET) assets
 
 $(OBJ_DIR)/%.o: %.cpp
 	@mkdir -p $(@D)
@@ -24,6 +24,13 @@ $(APP_DIR)/$(TARGET): $(OBJECTS)
 -include $(DEPENDENCIES)
 
 .PHONY: all build clean debug release info
+
+assets:
+ifneq ($(wildcard ../assets/parser),)
+		@mkdir -p $(APP_DIR)/assets
+		@cp ../assets/parser/* $(APP_DIR)/assets
+endif
+
 
 build:
 	@mkdir -p $(APP_DIR)
