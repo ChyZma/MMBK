@@ -15,82 +15,63 @@ u16 Caff::parseBlock(std::vector<byte> block) {
       return 1;
     }
 
-    u64 header_size = bytesToU64(std::vector<byte>(
-        block.begin() + CAFF_SIZES.total + CAFF_HEADER_SIZES.magic,
-        block.begin() + CAFF_SIZES.total + CAFF_HEADER_SIZES.magic +
-            CAFF_HEADER_SIZES.header_size));
-    if (header_size != block.size() - CAFF_SIZES.total) {
+    u64 header_size = bytesToU64(
+        std::vector<byte>(block.begin() + CAFF_HEADER_OFFSETS::header_size,
+                          block.begin() + CAFF_HEADER_OFFSETS::header_size +
+                              CAFF_HEADER_SIZES::header_size));
+    if (header_size != block.size() - CAFF_SIZES::total) {
       return 2;
     }
-    u64 num_anim = bytesToU64(std::vector<byte>(
-        block.begin() + CAFF_SIZES.total + CAFF_HEADER_SIZES.magic +
-            CAFF_HEADER_SIZES.header_size,
-        block.begin() + CAFF_SIZES.total + CAFF_HEADER_SIZES.total));
+    u64 num_anim = bytesToU64(
+        std::vector<byte>(block.begin() + CAFF_HEADER_OFFSETS::num_anim,
+                          block.begin() + CAFF_HEADER_OFFSETS::num_anim +
+                              CAFF_HEADER_SIZES::num_anim));
     this->num_anim = num_anim;
     break;
   }
   case 2: {
-    CAFF_SIZES CAFF_SIZES;
-    CAFF_CREDITS_SIZES CAFF_CREDITS_SIZES;
     // TODO(mark): some kind of date sanitization
-    u32 year = bytesToU64(std::vector<byte>(block.begin() + CAFF_SIZES.total,
-                                            block.begin() + CAFF_SIZES.total +
-                                                CAFF_CREDITS_SIZES.year));
-    // TODO(mark): This is the point I realized the ugliness of using these
-    // structs... Probably needs a refactor if there is time for it. Maybe use
-    // the actual start position of the different fields instead of lengths.
-    u16 month = bytesToU64(std::vector<byte>(
-        block.begin() + CAFF_SIZES.total + CAFF_CREDITS_SIZES.year,
-        block.begin() + CAFF_SIZES.total + CAFF_CREDITS_SIZES.year +
-            CAFF_CREDITS_SIZES.month));
+    u32 year = bytesToU64(std::vector<byte>(
+        block.begin() + CAFF_CREDITS_OFFSETS::year,
+        block.begin() + CAFF_CREDITS_OFFSETS::year + CAFF_CREDITS_SIZES::year));
+    u16 month = bytesToU64(
+        std::vector<byte>(block.begin() + CAFF_CREDITS_OFFSETS::month,
+                          block.begin() + CAFF_CREDITS_OFFSETS::month +
+                              CAFF_CREDITS_SIZES::month));
     u16 day = bytesToU64(std::vector<byte>(
-        block.begin() + CAFF_SIZES.total + CAFF_CREDITS_SIZES.year +
-            CAFF_CREDITS_SIZES.month,
-        block.begin() + CAFF_SIZES.total + CAFF_CREDITS_SIZES.year +
-            CAFF_CREDITS_SIZES.month + CAFF_CREDITS_SIZES.day));
+        block.begin() + CAFF_CREDITS_OFFSETS::day,
+        block.begin() + CAFF_CREDITS_OFFSETS::day + CAFF_CREDITS_SIZES::day));
     u16 hour = bytesToU64(std::vector<byte>(
-        block.begin() + CAFF_SIZES.total + CAFF_CREDITS_SIZES.year +
-            CAFF_CREDITS_SIZES.month + CAFF_CREDITS_SIZES.day,
-        block.begin() + CAFF_SIZES.total + CAFF_CREDITS_SIZES.year +
-            CAFF_CREDITS_SIZES.month + CAFF_CREDITS_SIZES.day +
-            CAFF_CREDITS_SIZES.hour));
-    u16 minute = bytesToU64(std::vector<byte>(
-        block.begin() + CAFF_SIZES.total + CAFF_CREDITS_SIZES.year +
-            CAFF_CREDITS_SIZES.month + CAFF_CREDITS_SIZES.day +
-            CAFF_CREDITS_SIZES.hour,
-        block.begin() + CAFF_SIZES.total + CAFF_CREDITS_SIZES.year +
-            CAFF_CREDITS_SIZES.month + CAFF_CREDITS_SIZES.day +
-            CAFF_CREDITS_SIZES.hour + CAFF_CREDITS_SIZES.minute));
-    u64 creator_len = bytesToU64(std::vector<byte>(
-        block.begin() + CAFF_SIZES.total + CAFF_CREDITS_SIZES.year +
-            CAFF_CREDITS_SIZES.month + CAFF_CREDITS_SIZES.day +
-            CAFF_CREDITS_SIZES.hour + CAFF_CREDITS_SIZES.minute,
-        block.begin() + CAFF_SIZES.total + CAFF_CREDITS_SIZES.year +
-            CAFF_CREDITS_SIZES.month + CAFF_CREDITS_SIZES.day +
-            CAFF_CREDITS_SIZES.hour + CAFF_CREDITS_SIZES.minute +
-            CAFF_CREDITS_SIZES.creator_len));
-    std::string creator(
-        block.begin() + CAFF_SIZES.total + CAFF_CREDITS_SIZES.year +
-            CAFF_CREDITS_SIZES.month + CAFF_CREDITS_SIZES.day +
-            CAFF_CREDITS_SIZES.hour + CAFF_CREDITS_SIZES.minute +
-            CAFF_CREDITS_SIZES.creator_len,
-        block.begin() + CAFF_SIZES.total + CAFF_CREDITS_SIZES.year +
-            CAFF_CREDITS_SIZES.month + CAFF_CREDITS_SIZES.day +
-            CAFF_CREDITS_SIZES.hour + CAFF_CREDITS_SIZES.minute +
-            CAFF_CREDITS_SIZES.creator_len + creator_len);
+        block.begin() + CAFF_CREDITS_OFFSETS::hour,
+        block.begin() + CAFF_CREDITS_OFFSETS::hour + CAFF_CREDITS_SIZES::hour));
+    u16 minute = bytesToU64(
+        std::vector<byte>(block.begin() + CAFF_CREDITS_OFFSETS::minute,
+                          block.begin() + CAFF_CREDITS_OFFSETS::minute +
+                              CAFF_CREDITS_SIZES::minute));
+    u64 creator_len = bytesToU64(
+        std::vector<byte>(block.begin() + CAFF_CREDITS_OFFSETS::creator_len,
+                          block.begin() + CAFF_CREDITS_OFFSETS::creator_len +
+                              CAFF_CREDITS_SIZES::creator_len));
+    std::string creator(block.begin() + CAFF_CREDITS_OFFSETS::creator,
+                        block.begin() + CAFF_CREDITS_OFFSETS::creator +
+                            creator_len);
 
     this->credits = {year, month, day, hour, minute, creator_len, creator};
-
     break;
   }
   case 3: {
-    CAFF_SIZES CAFF_SIZES;
-    CAFF_ANIMATION_SIZES CAFF_ANIMATION_SIZES;
-    u64 duration = bytesToU64(std::vector<byte>(
-        block.begin() + CAFF_SIZES.total,
-        block.begin() + CAFF_SIZES.total + CAFF_ANIMATION_SIZES.duration));
+    u64 len = bytesToU64(std::vector<byte>(
+        block.begin() + CAFF_OFFSETS::length,
+        block.begin() + CAFF_OFFSETS::length + CAFF_SIZES::length));
 
-    // TODO(mark): The whole CIFF thing.
+    u64 duration = bytesToU64(
+        std::vector<byte>(block.begin() + CAFF_ANIMATION_OFFSETS::duration,
+                          block.begin() + CAFF_ANIMATION_OFFSETS::duration +
+                              CAFF_ANIMATION_SIZES::duration));
+    Ciff ciff = Ciff(
+        len, duration,
+        std::vector<byte>(block.begin() + CAFF_ANIMATION_OFFSETS::ciff,
+                          block.begin() + CAFF_ANIMATION_OFFSETS::ciff + len));
     break;
   }
   default:
