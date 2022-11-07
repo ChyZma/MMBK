@@ -88,7 +88,6 @@ u16 Caff::parse() {
   caff_file.close();
 
   std::vector<std::vector<byte>> blocks;
-  CAFF_SIZES CAFF_SIZES;
 
   std::size_t cnt = 0;
   while (cnt < bytes.size()) {
@@ -99,16 +98,16 @@ u16 Caff::parse() {
       return 1;
     }
 
-    u64 len = bytesToU64(std::vector<byte>(bytes.begin() + cnt + CAFF_SIZES.id,
-                                           bytes.begin() + cnt + CAFF_SIZES.id +
-                                               CAFF_SIZES.length));
+    u64 len = bytesToU64(std::vector<byte>(
+        bytes.begin() + cnt + CAFF_OFFSETS::length,
+        bytes.begin() + cnt + CAFF_OFFSETS::length + CAFF_SIZES::length));
     if (len < 0) {
       return 1;
     }
     blocks.push_back(std::vector<byte>(
-        bytes.begin() + cnt, bytes.begin() + cnt + CAFF_SIZES.total + len));
+        bytes.begin() + cnt, bytes.begin() + cnt + CAFF_SIZES::total + len));
 
-    cnt += CAFF_SIZES.id + CAFF_SIZES.length + len;
+    cnt += CAFF_SIZES::total + len;
   }
 
   for (auto &block : blocks) {
