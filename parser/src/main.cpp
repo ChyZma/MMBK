@@ -1,5 +1,4 @@
 #include "caff.hpp"
-#include <boost/numeric/conversion/detail/meta.hpp>
 
 void help() {
   std::cout << "Usage: mmbk SOURCE GIF_DEST META_DEST" << std::endl;
