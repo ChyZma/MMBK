@@ -3,6 +3,8 @@
 
 #include <algorithm>
 #include <fstream>
+#include <numeric>
+#include <ostream>
 #include <string>
 
 #include "ciff.hpp"
@@ -82,15 +84,17 @@ struct CaffCredits {
 class Caff {
 private:
   std::string path;
+  std::string name;
   u64 num_anim = -1;
   CaffCredits credits;
   std::vector<Ciff> ciffs;
 
 public:
-  Caff(std::string path);
+  Caff(std::string path, std::string name);
   u16 parseBlock(std::vector<byte> block);
   u16 parse();
   void generateGif(std::string path);
+  void generateMeta(std::string path);
 };
 
 #endif /* CAFF_H */

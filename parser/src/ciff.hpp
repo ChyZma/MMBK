@@ -37,14 +37,16 @@ class Ciff {
 private:
   u64 length = -1;
   std::vector<byte> bytes;
-  std::string caption = "";
-  std::vector<std::string> tags;
 
 public:
   Ciff(u64 len, u64 duration, std::vector<byte> bytes);
+
   u64 duration = -1;
   u64 width = 0;
   u64 height = 0;
+  std::string caption = "";
+  std::vector<std::string> tags;
+
   u16 parse();
   Image image;
 };

@@ -1,7 +1,11 @@
 #include "caff.hpp"
 #include "gif.h"
+#include <ostream>
 
-Caff::Caff(std::string path) { this->path = path; }
+Caff::Caff(std::string path, std::string name) {
+  this->path = path;
+  this->name = name;
+}
 
 u16 Caff::parseBlock(std::vector<byte> block) {
   switch ((u16)block[0]) {
@@ -146,4 +150,25 @@ void Caff::generateGif(std::string path) {
   }
 
   GifEnd(&g);
+}
+
+void Caff::generateMeta(std::string path) {
+  std::ofstream out_file(path);
+  if (out_file.is_open()) {
+    out_file << "[caff]" << std::endl;
+    out_file << "number_of_animations = " << this->num_anim << std::endl;
+    for (u64 i = 0; i < this->ciffs.size(); i++) {
+      auto ciff = this->ciffs[i];
+      out_file << "[ciff_" << i << "]" << std::endl;
+      out_file << "width = " << ciff.width << std::endl;
+      out_file << "height = " << ciff.height << std::endl;
+      out_file << "duration = " << ciff.duration << std::endl;
+      out_file << "caption = " << ciff.caption << std::endl;
+      std::string conneceted_tags = std::accumulate(
+          std::next(ciff.tags.begin()), ciff.tags.end(), ciff.tags[0],
+          [](std::string a, std::string b) { return a + ',' + b; });
+      out_file << "tags = " << conneceted_tags << std::endl;
+    }
+    out_file.close();
+  }
 }
