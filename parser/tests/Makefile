@@ -5,7 +5,7 @@ BUILD    := ../build/tests
 OBJ_DIR  := $(BUILD)/objects
 TEST_DIR := $(BUILD)
 TARGET   := mmbk_test
-INCLUDE  := -Iinclude/ -I../src
+INCLUDE  := -I../include/ -I../src
 APP_SRC  := $(wildcard ../src/*.cpp)
 SRC      := $(wildcard *.cpp)  $(filter-out ../src/main.cpp, $(APP_SRC))
 

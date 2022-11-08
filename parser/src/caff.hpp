@@ -5,10 +5,9 @@
 #include <fstream>
 #include <string>
 
-#include <iostream> // TODO(mark): remove this when testing is done
-
 #include "ciff.hpp"
 #include "common.hpp"
+
 struct CAFF_SIZES {
   static const int id = 1;
   static const int length = 8;
@@ -85,11 +84,13 @@ private:
   std::string path;
   u64 num_anim = -1;
   CaffCredits credits;
+  std::vector<Ciff> ciffs;
 
 public:
   Caff(std::string path);
   u16 parseBlock(std::vector<byte> block);
   u16 parse();
+  void generateGif(std::string path);
 };
 
 #endif /* CAFF_H */

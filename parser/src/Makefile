@@ -5,7 +5,7 @@ BUILD    := ../build/parser
 OBJ_DIR  := $(BUILD)/objects
 APP_DIR  := $(BUILD)
 TARGET   := mmbk
-INCLUDE  := -Iinclude/
+INCLUDE  := -I../include/
 SRC      := $(wildcard *.cpp)
 
 OBJECTS      := $(SRC:%.cpp=$(OBJ_DIR)/%.o)

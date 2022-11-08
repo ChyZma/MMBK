@@ -1,16 +1,14 @@
 #include "caff.hpp"
+#include "gif.h"
 
 Caff::Caff(std::string path) { this->path = path; }
 
 u16 Caff::parseBlock(std::vector<byte> block) {
   switch ((u16)block[0]) {
   case 1: {
-    CAFF_SIZES CAFF_SIZES;
-    CAFF_HEADER_SIZES CAFF_HEADER_SIZES;
-
-    std::string magic(block.begin() + CAFF_SIZES.total,
-                      block.begin() + CAFF_SIZES.total +
-                          CAFF_HEADER_SIZES.magic);
+    std::string magic(block.begin() + CAFF_HEADER_OFFSETS::magic,
+                      block.begin() + CAFF_HEADER_OFFSETS::magic +
+                          CAFF_HEADER_SIZES::magic);
     if (magic != "CAFF") {
       return 1;
     }
@@ -55,7 +53,6 @@ u16 Caff::parseBlock(std::vector<byte> block) {
     std::string creator(block.begin() + CAFF_CREDITS_OFFSETS::creator,
                         block.begin() + CAFF_CREDITS_OFFSETS::creator +
                             creator_len);
-
     this->credits = {year, month, day, hour, minute, creator_len, creator};
     break;
   }
@@ -72,6 +69,7 @@ u16 Caff::parseBlock(std::vector<byte> block) {
         len, duration,
         std::vector<byte>(block.begin() + CAFF_ANIMATION_OFFSETS::ciff,
                           block.begin() + CAFF_ANIMATION_OFFSETS::ciff + len));
+    this->ciffs.push_back(ciff);
     break;
   }
   default:
@@ -116,6 +114,36 @@ u16 Caff::parse() {
       return 1;
     }
   }
+  for (auto &ciff : ciffs) {
+    u16 succ = ciff.parse();
+    if (succ != 0) {
+      return 1;
+    }
+  }
 
   return 0;
+}
+
+void Caff::generateGif(std::string path) {
+  GifWriter g;
+  u32 max_width = 0;
+  u32 max_height = 0;
+  for (auto &ciff : this->ciffs) {
+    if ((u32)ciff.width > max_width) {
+      max_width = (u32)ciff.width;
+    }
+    if ((u32)ciff.height > max_height) {
+      max_height = (u32)ciff.height;
+    }
+  }
+
+  GifBegin(&g, path.c_str(), max_width, max_height,
+           this->ciffs[0].duration / 10, 8, true);
+
+  for (auto &ciff : this->ciffs) {
+    GifWriteFrame(&g, ciff.image.flatten().data(), ciff.width, ciff.height,
+                  ciff.duration / 10);
+  }
+
+  GifEnd(&g);
 }
