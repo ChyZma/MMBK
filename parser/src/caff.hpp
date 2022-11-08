@@ -84,13 +84,12 @@ struct CaffCredits {
 class Caff {
 private:
   std::string path;
-  std::string name;
   u64 num_anim = -1;
   CaffCredits credits;
   std::vector<Ciff> ciffs;
 
 public:
-  Caff(std::string path, std::string name);
+  Caff(std::string path);
   u16 parseBlock(std::vector<byte> block);
   u16 parse();
   void generateGif(std::string path);

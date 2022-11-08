@@ -2,10 +2,7 @@
 #include "gif.h"
 #include <ostream>
 
-Caff::Caff(std::string path, std::string name) {
-  this->path = path;
-  this->name = name;
-}
+Caff::Caff(std::string path) { this->path = path; }
 
 u16 Caff::parseBlock(std::vector<byte> block) {
   switch ((u16)block[0]) {
