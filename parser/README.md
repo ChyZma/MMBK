@@ -10,7 +10,7 @@ In the future we plan to use it as a shared library in a C# backend, which will 
 * Building and running the tests:
   ```
   # In the parser folder
-  make tests
+  make test
   ```
 * Building the parser:
   ```
