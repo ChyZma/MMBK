@@ -28,7 +28,7 @@ $(TEST_DIR)/$(TARGET): $(OBJECTS)
 .PHONY: all build clean debug release info
 
 assets:
-ifneq ($(wildcard ../assets/test),)
+ifneq ($(wildcard ../assets/tests),)
 		@mkdir -p $(TEST_DIR)/assets
 		@cp ../assets/tests/* $(TEST_DIR)/assets
 endif
