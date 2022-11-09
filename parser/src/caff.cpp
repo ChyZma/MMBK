@@ -64,7 +64,7 @@ u16 Caff::parseBlock(std::vector<byte> block) {
     u16 hour = bytesToU64(std::vector<byte>(
         block.begin() + CAFF_CREDITS_OFFSETS::hour,
         block.begin() + CAFF_CREDITS_OFFSETS::hour + CAFF_CREDITS_SIZES::hour));
-    if (day < 0 || day > 24) {
+    if (hour < 0 || hour > 24) {
       return 26;
     }
 
