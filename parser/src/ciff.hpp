@@ -2,7 +2,6 @@
 #define CIFF_H
 #include "common.hpp"
 
-#include <iostream> // TODO(mark): remove this when testing is done
 #include <sstream>
 
 struct CIFF_SIZES {

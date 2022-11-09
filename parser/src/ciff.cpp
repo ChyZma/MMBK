@@ -22,9 +22,8 @@ u16 Ciff::parse() {
   std::string magic(bytes.begin() + CIFF_OFFSETS::magic,
                     bytes.begin() + CIFF_OFFSETS::magic + CIFF_SIZES::magic);
   if (magic != "CIFF") {
-    return 1;
+    return 41;
   }
-  // TODO(mark): do some header size checks
   u64 header_size = bytesToU64(std::vector<byte>(
       bytes.begin() + CIFF_OFFSETS::header_size,
       bytes.begin() + CIFF_OFFSETS::header_size + CIFF_SIZES::header_size));
@@ -42,7 +41,7 @@ u16 Ciff::parse() {
       bytes.begin() + CIFF_OFFSETS::width + CIFF_SIZES::width));
 
   if (this->height * this->width * 3 != content_size) {
-    return 2;
+    return 42;
   }
 
   std::string caption_and_tags_string = std::string(

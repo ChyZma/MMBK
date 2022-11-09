@@ -90,10 +90,12 @@ private:
 
 public:
   Caff(std::string path);
+  u16 loadFile();
+  std::vector<byte> bytes;
   u16 parseBlock(std::vector<byte> block);
   u16 parse();
-  void generateGif(std::string path);
-  void generateMeta(std::string path);
+  u16 generateGif(std::string path);
+  u16 generateMeta(std::string path);
 };
 
 #endif /* CAFF_H */

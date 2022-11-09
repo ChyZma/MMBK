@@ -3,6 +3,16 @@
 #include <ostream>
 
 Caff::Caff(std::string path) { this->path = path; }
+u16 Caff::loadFile() {
+  std::ifstream caff_file(this->path, std::ifstream::binary);
+  if (!caff_file.is_open()) {
+    return 12;
+  }
+  this->bytes = std::vector<byte>((std::istreambuf_iterator<char>(caff_file)),
+                                  (std::istreambuf_iterator<char>()));
+  caff_file.close();
+  return 0;
+}
 
 u16 Caff::parseBlock(std::vector<byte> block) {
   switch ((u16)block[0]) {
@@ -11,7 +21,7 @@ u16 Caff::parseBlock(std::vector<byte> block) {
                       block.begin() + CAFF_HEADER_OFFSETS::magic +
                           CAFF_HEADER_SIZES::magic);
     if (magic != "CAFF") {
-      return 1;
+      return 24;
     }
 
     u64 header_size = bytesToU64(
@@ -19,7 +29,7 @@ u16 Caff::parseBlock(std::vector<byte> block) {
                           block.begin() + CAFF_HEADER_OFFSETS::header_size +
                               CAFF_HEADER_SIZES::header_size));
     if (header_size != block.size() - CAFF_SIZES::total) {
-      return 2;
+      return 25;
     }
     u64 num_anim = bytesToU64(
         std::vector<byte>(block.begin() + CAFF_HEADER_OFFSETS::num_anim,
@@ -29,28 +39,51 @@ u16 Caff::parseBlock(std::vector<byte> block) {
     break;
   }
   case 2: {
-    // TODO(mark): some kind of date sanitization
     u32 year = bytesToU64(std::vector<byte>(
         block.begin() + CAFF_CREDITS_OFFSETS::year,
         block.begin() + CAFF_CREDITS_OFFSETS::year + CAFF_CREDITS_SIZES::year));
+    if (year < 1900 || year > 2030) {
+      return 26;
+    }
+
     u16 month = bytesToU64(
         std::vector<byte>(block.begin() + CAFF_CREDITS_OFFSETS::month,
                           block.begin() + CAFF_CREDITS_OFFSETS::month +
                               CAFF_CREDITS_SIZES::month));
+    if (month < 1 || month > 12) {
+      return 26;
+    }
+
     u16 day = bytesToU64(std::vector<byte>(
         block.begin() + CAFF_CREDITS_OFFSETS::day,
         block.begin() + CAFF_CREDITS_OFFSETS::day + CAFF_CREDITS_SIZES::day));
+    if (day < 1 || day > 31) {
+      return 26;
+    }
+
     u16 hour = bytesToU64(std::vector<byte>(
         block.begin() + CAFF_CREDITS_OFFSETS::hour,
         block.begin() + CAFF_CREDITS_OFFSETS::hour + CAFF_CREDITS_SIZES::hour));
+    if (day < 0 || day > 24) {
+      return 26;
+    }
+
     u16 minute = bytesToU64(
         std::vector<byte>(block.begin() + CAFF_CREDITS_OFFSETS::minute,
                           block.begin() + CAFF_CREDITS_OFFSETS::minute +
                               CAFF_CREDITS_SIZES::minute));
+    if (minute < 0 || minute > 60) {
+      return 26;
+    }
+
     u64 creator_len = bytesToU64(
         std::vector<byte>(block.begin() + CAFF_CREDITS_OFFSETS::creator_len,
                           block.begin() + CAFF_CREDITS_OFFSETS::creator_len +
                               CAFF_CREDITS_SIZES::creator_len));
+    if (creator_len < 1) {
+      return 27;
+    }
+
     std::string creator(block.begin() + CAFF_CREDITS_OFFSETS::creator,
                         block.begin() + CAFF_CREDITS_OFFSETS::creator +
                             creator_len);
@@ -74,34 +107,47 @@ u16 Caff::parseBlock(std::vector<byte> block) {
     break;
   }
   default:
-    return 1;
+    return 28;
   }
 
   return 0;
 }
 
 u16 Caff::parse() {
-  std::ifstream caff_file(this->path, std::ifstream::binary);
-  std::vector<byte> bytes((std::istreambuf_iterator<char>(caff_file)),
-                          (std::istreambuf_iterator<char>()));
-  caff_file.close();
-
   std::vector<std::vector<byte>> blocks;
 
   std::size_t cnt = 0;
+  bool id_found = false;
+  bool credits_found = false;
   while (cnt < bytes.size()) {
     u16 id = (u16)bytes[cnt + 0];
-    // TODO(mark): Handle multiple header and credits blocks... Probably with
-    // returning 1. Maybe use a counter for each type of block.
+    switch (id) {
+    case 1: {
+      if (id_found == true) {
+        return 21;
+      }
+      id_found = true;
+      break;
+    }
+    case 2:
+      if (credits_found == true) {
+        return 22;
+      }
+      credits_found = true;
+      break;
+
+    default:
+      break;
+    }
     if (id < 1 || id > 3) {
-      return 1;
+      return 28;
     }
 
     u64 len = bytesToU64(std::vector<byte>(
         bytes.begin() + cnt + CAFF_OFFSETS::length,
         bytes.begin() + cnt + CAFF_OFFSETS::length + CAFF_SIZES::length));
     if (len < 0) {
-      return 1;
+      return 29;
     }
     blocks.push_back(std::vector<byte>(
         bytes.begin() + cnt, bytes.begin() + cnt + CAFF_SIZES::total + len));
@@ -109,23 +155,27 @@ u16 Caff::parse() {
     cnt += CAFF_SIZES::total + len;
   }
 
+  if (id_found == false || credits_found == false) {
+    return 23;
+  }
+
   for (auto &block : blocks) {
     u16 succ = parseBlock(block);
     if (succ != 0) {
-      return 1;
+      return succ;
     }
   }
   for (auto &ciff : ciffs) {
     u16 succ = ciff.parse();
     if (succ != 0) {
-      return 1;
+      return succ;
     }
   }
 
   return 0;
 }
 
-void Caff::generateGif(std::string path) {
+u16 Caff::generateGif(std::string path) {
   GifWriter g;
   u32 max_width = 0;
   u32 max_height = 0;
@@ -142,14 +192,17 @@ void Caff::generateGif(std::string path) {
            this->ciffs[0].duration / 10, 8, true);
 
   for (auto &ciff : this->ciffs) {
-    GifWriteFrame(&g, ciff.image.flatten().data(), ciff.width, ciff.height,
-                  ciff.duration / 10);
+    if (GifWriteFrame(&g, ciff.image.flatten().data(), ciff.width, ciff.height,
+                      ciff.duration / 10) != 1) {
+      return 31;
+    }
   }
 
   GifEnd(&g);
+  return 0;
 }
 
-void Caff::generateMeta(std::string path) {
+u16 Caff::generateMeta(std::string path) {
   std::ofstream out_file(path);
   if (out_file.is_open()) {
     out_file << "[caff]" << std::endl;
@@ -167,5 +220,8 @@ void Caff::generateMeta(std::string path) {
       out_file << "tags = " << conneceted_tags << std::endl;
     }
     out_file.close();
+  } else {
+    return 32;
   }
+  return 0;
 }
