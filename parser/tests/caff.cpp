@@ -37,7 +37,7 @@ BOOST_AUTO_TEST_CASE(caff_test_wrong_id_larger) {
   BOOST_REQUIRE(ret == 28);
 }
 
-BOOST_AUTO_TEST_CASE(caff_test_multiple_id) {
+BOOST_AUTO_TEST_CASE(caff_test_multiple_headers) {
   Caff c = Caff("../assets/tests/1.caff");
   c.loadFile();
   c.bytes[CAFF_HEADER_OFFSETS::num_anim + CAFF_HEADER_SIZES::num_anim] =
@@ -54,7 +54,7 @@ BOOST_AUTO_TEST_CASE(caff_test_multiple_credits) {
   BOOST_REQUIRE(ret == 22);
 }
 
-BOOST_AUTO_TEST_CASE(caff_test_no_id_or_cred) {
+BOOST_AUTO_TEST_CASE(caff_test_no_header_or_credits) {
   Caff c = Caff("../assets/tests/1.caff");
   c.loadFile();
   c.bytes[CAFF_HEADER_OFFSETS::num_anim + CAFF_HEADER_SIZES::num_anim] =

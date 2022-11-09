@@ -117,16 +117,16 @@ u16 Caff::parse() {
   std::vector<std::vector<byte>> blocks;
 
   std::size_t cnt = 0;
-  bool id_found = false;
+  bool header_found = false;
   bool credits_found = false;
   while (cnt < bytes.size()) {
     u16 id = (u16)bytes[cnt + 0];
     switch (id) {
     case 1: {
-      if (id_found == true) {
+      if (header_found == true) {
         return 21;
       }
-      id_found = true;
+      header_found = true;
       break;
     }
     case 2:
@@ -155,7 +155,7 @@ u16 Caff::parse() {
     cnt += CAFF_SIZES::total + len;
   }
 
-  if (id_found == false || credits_found == false) {
+  if (header_found == false || credits_found == false) {
     return 23;
   }
 
@@ -207,6 +207,10 @@ u16 Caff::generateMeta(std::string path) {
   if (out_file.is_open()) {
     out_file << "[caff]" << std::endl;
     out_file << "number_of_animations = " << this->num_anim << std::endl;
+    out_file << "creation_time = " << this->credits.year << "-"
+             << this->credits.month << "-" << this->credits.day << "T"
+             << this->credits.hour << ":" << this->credits.minute << std::endl;
+    out_file << "creator = " << this->credits.creator << std::endl;
     for (u64 i = 0; i < this->ciffs.size(); i++) {
       auto ciff = this->ciffs[i];
       out_file << "[ciff_" << i << "]" << std::endl;
