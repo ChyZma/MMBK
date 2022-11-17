@@ -1,7 +1,6 @@
 ﻿using CaffBackend.Requests;
 using DataAccess.Constants;
 using DataAccess.Entities;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;

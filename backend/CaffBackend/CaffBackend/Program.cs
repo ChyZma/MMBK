@@ -1,3 +1,4 @@
+using CaffBackend.Config;
 using DataAccess;
 using DataAccess.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -62,7 +63,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-builder.Services.AddManagers();)
+builder.Services.AddManagers();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
