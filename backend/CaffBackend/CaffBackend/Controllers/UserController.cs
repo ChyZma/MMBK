@@ -1,4 +1,5 @@
 ﻿using CaffBackend.Requests;
+using CaffBackend.Responses;
 using DataAccess.Constants;
 using DataAccess.Entities;
 using Microsoft.AspNetCore.Identity;
@@ -23,33 +24,34 @@ namespace CaffBackend.Controllers
             _userManager = userManager;
             _configuration = configuration;
         }
-        
+
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterRequest request)
         {
             var userExists = await _userManager.FindByNameAsync(request.UserName);
             if (userExists != null)
+            {
                 return StatusCode(409, "User already exists!");
+            }
 
             User user = new User()
             {
                 Email = request.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
                 UserName = request.UserName,
-                FirstName = request.FirstName,
-                LastName = request.LastName,
             };
-
-            //default user role is user
+            
             var result = await _userManager.CreateAsync(user, request.Password);
             if (!result.Succeeded)
+            {
                 return StatusCode(500, "User creation failed! Please check user details and try again.");
+            }
 
             await _userManager.AddToRoleAsync(user, UserRoleConstants.User);
 
             return Ok("User created successfully!");
         }
-        
+
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
@@ -101,5 +103,18 @@ namespace CaffBackend.Controllers
 
             return Ok("User role changed successfully!");
         }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteUser(string id)
+        {
+            return Ok();
+        }
+
+        [HttpGet]        
+        public ActionResult<List<UserResponse>> ListAllUsers()
+        {
+            return Ok();
+        }
+
     }
 }

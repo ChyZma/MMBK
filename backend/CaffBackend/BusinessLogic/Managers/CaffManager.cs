@@ -11,6 +11,5 @@ namespace BusinessLogic.Managers
             _context = context;
         }
 
-        
     }
 }

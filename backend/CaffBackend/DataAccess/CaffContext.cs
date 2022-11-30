@@ -49,6 +49,10 @@ namespace DataAccess
                 .WithOne(c => c.Uploader)
                 .HasForeignKey(c => c.UploaderId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.OwnedCaffFiles)
+                .WithMany(c => c.Owners);
         }
     }
 }

@@ -7,6 +7,7 @@ namespace CaffBackend.Config
         public static void AddManagers(this IServiceCollection services)
         {
             services.AddScoped<ICaffManager, CaffManager>();
+            services.AddScoped<ICaffCommentManager, CaffCommentManager>();
         }
     }
 }

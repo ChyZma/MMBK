@@ -11,9 +11,11 @@ namespace DataAccess.Entities
         public double Price { get; set; } = 0;
         public Currency Currency { get; set; } = Currency.HUF;
         public string UploaderId { get; set; }
+        public bool Enabled { get; set; }
 
         public List<Comment> Comments { get; set; }
         public List<Tag> Tags { get; set; }
         public User Uploader { get; set; }
+        public List<User> Owners { get; set; }
     }
 }
