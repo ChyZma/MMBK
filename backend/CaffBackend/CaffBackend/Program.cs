@@ -1,5 +1,6 @@
 using CaffBackend.Config;
 using DataAccess;
+using DataAccess.Constants;
 using DataAccess.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -16,16 +17,20 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<CaffContext>(options =>
-{
+{    
+#if DEBUG
+        options.UseInMemoryDatabase("CaffDb");
+#else 
     options.UseSqlServer(
             configuration.GetConnectionString("DefaultConnection"),
             b => b.MigrationsAssembly("CaffBackend")
         );
+#endif
 });
 
 builder.Services.AddIdentity<User, IdentityRole>()
     .AddEntityFrameworkStores<CaffContext>()
-    .AddDefaultTokenProviders();
+    .AddDefaultTokenProviders();          
 
 builder.Services.Configure<IdentityOptions>(options =>
 {
@@ -71,6 +76,16 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+
+    //seed database
+    using (var scope = builder.Services.BuildServiceProvider().CreateScope())
+    {
+        var context = scope.ServiceProvider.GetRequiredService<CaffContext>();
+        context.Database.EnsureCreated();
+        //add roles
+        context.Roles.Add(new IdentityRole { Name = UserRoleConstants.Admin, NormalizedName = UserRoleConstants.Admin.ToUpper() });
+        context.Roles.Add(new IdentityRole { Name = UserRoleConstants.User, NormalizedName = UserRoleConstants.User.ToUpper() });
+    }
 }
 
 app.UseHttpsRedirection();
