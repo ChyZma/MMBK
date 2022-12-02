@@ -1,12 +1,17 @@
 ﻿using BusinessLogic.Managers;
 using CaffBackend.Requests;
 using CaffBackend.Responses;
+using DataAccess.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.IO.Compression;
 
 namespace CaffBackend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CaffController : ControllerBase
     {
         private readonly ICaffManager _caffManager;
@@ -17,36 +22,85 @@ namespace CaffBackend.Controllers
         }
 
         [HttpPost]
-        public IActionResult UploadCaff(CaffUploadRequest request) 
+        public IActionResult UploadCaff([FromForm] CaffUploadRequest request)
         {
-            return Ok();
+            try
+            {
+                using (var memoryStream = new MemoryStream())
+                {
+                    request.File.CopyTo(memoryStream);
+                    var file = new CaffFile
+                    {
+                        FileContent = memoryStream.ToArray(),
+                        FileName = request.File.FileName,
+                    };
+
+                    _caffManager.UploadCaff(file);
+                    return Ok();
+                }
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpGet("{id}")]
-        public FileContentResult DownloadCaff(int id)
+        public IActionResult DownloadCaff(int id)
         {
-            byte[] bytes = { };
-            return File(bytes, "");
+            try
+            {
+                var file = _caffManager.GetCaff(id);
+                return File(file.FileContent, "application/octet-stream", file.FileName);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpDelete("{id}")]
         public IActionResult DeleteCaff(int id)
         {
-            return Ok();
+            try
+            {
+                _caffManager.DeleteCaff(id);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpGet]
         public ActionResult<List<CaffResponse>> ListCaffs()
         {
-            return Ok();
+            try
+            {
+                var result = _caffManager.ListCaffs();
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpGet("{id}/preview")]
-        public FileContentResult PreviewCaff(int id)
+        public IActionResult PreviewCaff(int id)
         {
-            byte[] bytes = { };
-            return File(bytes, "");
+            try
+            {
+                byte[] file = _caffManager.GetCaffPreview(id);
+                return File(file, "image/gif");
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
     }
 }
+

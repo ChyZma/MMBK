@@ -1,5 +1,6 @@
 ﻿using BusinessLogic.Managers;
 using CaffBackend.Responses;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,6 +8,7 @@ namespace CaffBackend.Controllers
 {
     [Route("api/caff")]
     [ApiController]
+    [Authorize]
     public class CaffCommentController : ControllerBase
     {
         private readonly ICaffCommentManager _commentManager;

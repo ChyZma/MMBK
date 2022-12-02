@@ -2,6 +2,7 @@
 using CaffBackend.Responses;
 using DataAccess.Constants;
 using DataAccess.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -13,6 +14,7 @@ namespace CaffBackend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UserController : ControllerBase
     {
         private readonly UserManager<User> _userManager;
@@ -24,7 +26,8 @@ namespace CaffBackend.Controllers
             _userManager = userManager;
             _configuration = configuration;
         }
-
+        
+        [AllowAnonymous]
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterRequest request)
         {
@@ -53,6 +56,7 @@ namespace CaffBackend.Controllers
         }
 
         [HttpPost("login")]
+        [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
             var user = await _userManager.FindByNameAsync(request.UserName);
