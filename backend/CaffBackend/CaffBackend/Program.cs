@@ -9,6 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authentication;
 using System.Diagnostics.Contracts;
+using CaffBackend.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -98,6 +99,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
+app.UseMiddleware<CurrentUserMiddleware>();
 app.UseAuthorization();
 
 app.MapControllers();

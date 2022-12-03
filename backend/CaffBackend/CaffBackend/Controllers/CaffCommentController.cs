@@ -21,22 +21,52 @@ namespace CaffBackend.Controllers
         [HttpPost("{id}/comment")]
         public IActionResult AddComment(int id, [FromBody] string comment)
         {
-            //_commentManager.AddComment(id, comment);
-            return Ok();
+            try
+            {
+                _commentManager.AddComment(id, comment);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpDelete("{id}/comment/{commentId}")]
         public IActionResult DeleteComment(int id, int commentId)
         {
-            //_commentManager.DeleteComment(id);
-            return Ok();
+            try
+            {
+                _commentManager.DeleteComment(id);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpGet("{id}/comment")]
         public ActionResult<List<CaffCommentResponse>> GetComments(int id)
         {
-            //_commentManager.GetComments(id);
-            return Ok();
+            try
+            {
+                var result = _commentManager
+                    .GetCommentsOfCaff(id)
+                    .Select(c => new CaffCommentResponse
+                    {
+                        Id = c.Id,
+                        Comment = c.CommentText,
+                        UserName = c.Commenter.UserName,
+
+                    });
+
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
     }
 }
