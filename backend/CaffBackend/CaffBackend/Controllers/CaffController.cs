@@ -69,7 +69,7 @@ namespace CaffBackend.Controllers
             }
             catch (UnauthorizedAccessException e)
             {
-                return Forbid(e.Message);
+                return Unauthorized(e.Message);
             }
             catch (Exception e)
             {
