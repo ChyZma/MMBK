@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:webshop/pages/home/profile/profile_content.dart';
 import 'package:webshop/pages/home/profile/profile_model.dart';
 
+import '../../../app/theme/color_palette.dart';
+import '../../../app/theme/fonts.dart';
+
 class ProfileTab extends StatefulWidget {
   final ProfileModel model;
 
@@ -22,12 +25,23 @@ class _ProfileTabState extends State<ProfileTab> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      controller: _controller,
-      child: Column(
-        children: [
-          ProfileContent(model: widget.model),
-        ],
+    return Scaffold(
+      appBar: AppBar(
+        title: const Center(
+          child: Text(
+            'Profile',
+            style: Fonts.h3,
+          ),
+        ),
+        backgroundColor: ColorPalette.gray10,
+      ),
+      body: SingleChildScrollView(
+        controller: _controller,
+        child: Column(
+          children: [
+            ProfileContent(model: widget.model),
+          ],
+        ),
       ),
     );
   }

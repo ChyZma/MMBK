@@ -10,6 +10,7 @@ import 'package:webshop/service/auth_service.dart';
 
 import '../core/error_handler.dart';
 import '../core/loading_handler.dart';
+import '../pages/home/owned_list/owned_list_model.dart';
 import '../pages/home/shop_list/shop_model.dart';
 import '../pages/login/login_model.dart';
 import '../pages/signup/signup_model.dart';
@@ -64,7 +65,8 @@ class IoC {
 
     GetIt.I.registerFactory(() => SplashModel(get(), get()));
     GetIt.I.registerFactory(() => ProfileModel(get(), get()));
-    GetIt.I.registerFactory(() => ShopModel(get()));
+    GetIt.I.registerFactory(() => ShopModel(get(), get(), get()));
+    GetIt.I.registerFactory(() => OwnedModel(get(), get(), get()));
     GetIt.I.registerFactory(() => LoginModel(get(), get(), get(), get()));
     GetIt.I.registerFactory(() => SignUpModel(get(), get()));
   }

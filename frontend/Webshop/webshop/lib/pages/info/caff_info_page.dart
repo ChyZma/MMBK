@@ -25,7 +25,6 @@ class _CaffInfoPageState extends State<CaffInfoPage> {
         ),
         title: Text(_model.name),
         backgroundColor: ColorPalette.white,
-        elevation: 0.0,
         centerTitle: true,
       ),
       body: Container(),

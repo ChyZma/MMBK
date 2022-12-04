@@ -22,8 +22,9 @@ class ProfileContent extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          const Vgap(Sizes.giant),
           Text(
-            user.name!,
+            'Hello, ${user.name!}!',
             style: Fonts.medium,
           ),
           const Vgap(30),

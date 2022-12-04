@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:webshop/pages/home/profile/profile_model.dart';
 import 'package:webshop/pages/home/profile/profile_tab.dart';
 import 'package:webshop/pages/home/shop_list/shop_list_tab.dart';
+import 'package:webshop/pages/home/shop_list/shop_model.dart';
 
 import '../../app/ioc.dart';
 import '../../app/theme/assets.dart';
 import '../../app/theme/color_palette.dart';
 import '../../widget/system_style.dart';
+import 'owned_list/owned_list_model.dart';
+import 'owned_list/owned_list_tab.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -17,6 +20,10 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   late TabController _controller;
+
+  late final _shopModel = IoC.get<ShopModel>();
+  late final _ownedModel = IoC.get<OwnedModel>();
+  late final _profileModel = IoC.get<ProfileModel>();
 
   @override
   void initState() {
@@ -61,12 +68,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               Tab(
                   icon: TabContent(
                 selected: _controller.index == 1,
-                image: Assets.iconBasket,
+                image: Assets.iconFolder,
               )),
               Tab(
                   icon: TabContent(
                 selected: _controller.index == 2,
-                image: Assets.iconBasket,
+                image: Assets.iconProfile,
               )),
             ],
           ),
@@ -75,10 +82,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           controller: _controller,
           physics: const NeverScrollableScrollPhysics(),
           children: [
-            const ShopListTab(key: PageStorageKey('0')),
-            const ShopListTab(key: PageStorageKey('1')),
-            ProfileTab(
-                key: const PageStorageKey('2'), model: IoC.get<ProfileModel>()),
+            ShopListTab(key: const PageStorageKey('0'), model: _shopModel),
+            OwnedListTab(key: const PageStorageKey('1'), model: _ownedModel),
+            ProfileTab(key: const PageStorageKey('2'), model: _profileModel),
           ],
         ),
       ),
