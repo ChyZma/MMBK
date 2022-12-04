@@ -33,8 +33,8 @@ class UserRepository {
     await _secureStore.deleteToken();
   }
 
-  Future<void> deleteProfile(String id) async {
-    await _api.apiUserIdDelete(id);
+  Future<void> deleteProfile(int id) async {
+    await _api.apiUserIdDelete(id.toString());
   }
 
   Future<void> registerProfile(RegisterRequest profile) async {

@@ -4,6 +4,7 @@ import 'package:webshop/core/ui_handler.dart';
 import 'package:webshop/repository/app_content.dart';
 
 import '../../app/ioc.dart';
+import '../../models/user.dart';
 import '../../routing/app_route.dart';
 import '../../service/content_service.dart';
 import '../../service/user_service.dart';
@@ -36,7 +37,12 @@ class LoginModel {
   Future<void> _handleResult() async {
     if (_content.user.value != null) {
       await _loadShopCaffs();
-      await _loadOwnedCaffs();
+      if (_content.user.value!.role == Role.user) {
+        await _loadOwnedCaffs();
+      }
+      if (_content.user.value!.role == Role.admin) {
+        await _loadUserList();
+      }
       IoC.router.set(AppRoute.home());
     }
   }
@@ -52,6 +58,14 @@ class LoginModel {
   Future<void> _loadOwnedCaffs() async {
     try {
       await _contentService.loadOwnedCaffs();
+    } catch (e) {
+      logError(e);
+    }
+  }
+
+  Future<void> _loadUserList() async {
+    try {
+      await _contentService.loadUsers();
     } catch (e) {
       logError(e);
     }

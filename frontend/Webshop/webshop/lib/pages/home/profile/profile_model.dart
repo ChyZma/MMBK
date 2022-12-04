@@ -17,6 +17,8 @@ class ProfileModel {
 
   Content<User> get user => _content.user;
 
+  Content<List<User>> get users => _content.userList;
+
   String? path;
 
   String get fileName => path!.split('/').last;
@@ -44,6 +46,20 @@ class ProfileModel {
       path = null;
     } catch (e) {
       uiHandler.setError(e, retryCallback: uploadCaff);
+    } finally {
+      uiHandler.setFinished();
+    }
+  }
+
+  Future<void> deleteUser(int id) async {
+    if (uiHandler.isLoading) return;
+
+    uiHandler.setLoading();
+    try {
+      await _userService.deleteUser(id);
+      await _userService.loadUsers();
+    } catch (e) {
+      uiHandler.setError(e);
     } finally {
       uiHandler.setFinished();
     }

@@ -1,6 +1,5 @@
 import 'package:api/api.dart';
 
-import '../models/user.dart';
 import '../repository/app_content.dart';
 import '../repository/user_repository.dart';
 
@@ -36,7 +35,7 @@ class UserService {
     _content.user.value = null;
   }
 
-  Future deleteProfile(String id) async {
+  Future deleteUser(int id) async {
     try {
       await _repo.deleteProfile(id);
       _content.user.value = null;
@@ -53,9 +52,9 @@ class UserService {
     }
   }
 
-  Future<List<User>?> loadUsers() async {
+  Future<void> loadUsers() async {
     try {
-      return await _repo.loadAllUser();
+      _content.userList.value = await _repo.loadAllUser();
     } catch (e) {
       rethrow;
     }

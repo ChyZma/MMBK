@@ -146,7 +146,7 @@ namespace CaffBackend.Controllers
                     Id = u.Id,
                     UserName = u.UserName,
                     Email = u.Email,
-                    Roles = _userManager.GetRolesAsync(u).Result.ToList()
+                   // Roles = _userManager.GetRolesAsync(u).Result.ToList()
                 })
                 .ToList();
         }
