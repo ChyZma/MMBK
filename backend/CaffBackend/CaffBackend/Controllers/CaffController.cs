@@ -22,7 +22,7 @@ namespace CaffBackend.Controllers
         }
 
         [HttpPost]
-        public IActionResult UploadCaff(CaffUploadRequest request)
+        public IActionResult UploadCaff([FromForm] CaffUploadRequest request)
         {
             try
             {
