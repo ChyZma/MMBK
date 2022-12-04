@@ -65,4 +65,9 @@ class UserRepository {
     }
     return Role.user;
   }
+
+  Future<List<User>?> loadAllUser() async {
+    var userResponseList = await _api.apiUserGet();
+    // return userResponseList.map((e) => User(id: e.id,))
+  }
 }

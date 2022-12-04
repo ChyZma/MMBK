@@ -65,16 +65,12 @@ class ApiClient {
       if (body is MultipartFile &&
           (contentType == null ||
               !contentType.toLowerCase().startsWith('multipart/form-data'))) {
-        final request = StreamedRequest(method, uri);
+        final request = http.MultipartRequest(
+          'POST',
+          uri,
+        );
+        request.files.add(body);
         request.headers.addAll(headerParams);
-        request.contentLength = body.length;
-        body.finalize().listen(
-              request.sink.add,
-              onDone: request.sink.close,
-              // ignore: avoid_types_on_closure_parameters
-              onError: (Object error, StackTrace trace) => request.sink.close(),
-              cancelOnError: true,
-            );
         final response = await _client.send(request);
         return Response.fromStream(response);
       }

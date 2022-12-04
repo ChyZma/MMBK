@@ -38,13 +38,13 @@ class ErrorDialog extends StatelessWidget {
           children: [
             Text(
               title,
-              style: Fonts.h5,
+              style: Fonts.medium,
               textAlign: TextAlign.center,
             ),
             Vgap.medium(),
             Text(
               message,
-              style: Fonts.h6,
+              style: Fonts.small,
               textAlign: TextAlign.center,
             ),
             Vgap.large(),

@@ -5,6 +5,7 @@ import 'package:webshop/pages/home/profile/profile_model.dart';
 import '../../../app/theme/color_palette.dart';
 import '../../../app/theme/fonts.dart';
 import '../../../core/app_scaffold.dart';
+import '../../../models/user.dart';
 
 class ProfileTab extends StatefulWidget {
   final ProfileModel model;
@@ -41,7 +42,11 @@ class _ProfileTabState extends State<ProfileTab> {
         controller: _controller,
         child: Column(
           children: [
-            ProfileContent(model: widget.model),
+            if (widget.model.user.value!.role == Role.user) ...[
+              ProfileContent(model: widget.model),
+            ] else if (widget.model.user.value!.role == Role.admin) ...[
+              // AdminProfileContent(model: widget.model)
+            ]
           ],
         ),
       ),

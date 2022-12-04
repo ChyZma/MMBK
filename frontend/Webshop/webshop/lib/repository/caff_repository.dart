@@ -26,6 +26,12 @@ class CaffRepository {
   }
 
   //todo: preview
+  Future<void> caffPreview(int id) async {
+    await _api.apiCaffIdPreviewGet(id);
+  }
 
   //todo: get by id
+  Future<void> getCaffById(int id) async {
+    await _api.apiCaffIdGet(id);
+  }
 }

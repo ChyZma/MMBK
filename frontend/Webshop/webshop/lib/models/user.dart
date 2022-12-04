@@ -3,15 +3,23 @@ import 'package:api/api.dart';
 enum Role { admin, user }
 
 class User {
+  final int? id;
   final String? name;
   final String? email;
   final Role role;
 
-  User({this.name, this.email, this.role = Role.user});
+  User({this.id, this.name, this.email, this.role = Role.user});
 
   factory User.from(User profile) => User(
+        id: profile.id,
         name: profile.name,
         email: profile.email,
+      );
+
+  factory User.fromUserResponse(UserResponse userResponse) => User(
+        id: userResponse.id as int,
+        name: userResponse.userName,
+        email: userResponse.email,
       );
 
   @override

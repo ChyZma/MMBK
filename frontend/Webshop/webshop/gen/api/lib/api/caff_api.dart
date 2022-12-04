@@ -208,11 +208,7 @@ class CaffApi {
     final headerParams = <String, String>{};
     final formParams = <String, String>{};
 
-    const contentTypes = <String>[
-      'application/json',
-      'text/json',
-      'application/_*+json'
-    ];
+    const contentTypes = <String>[];
 
     return apiClient.invokeAPI(
       path,

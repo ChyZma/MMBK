@@ -15,22 +15,21 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:meta/meta.dart';
-
-part 'api_client.dart';
-part 'api_helper.dart';
-part 'api_exception.dart';
-part 'auth/authentication.dart';
-part 'auth/api_key_auth.dart';
-part 'auth/oauth.dart';
-part 'auth/http_basic_auth.dart';
-part 'auth/http_bearer_auth.dart';
 
 part 'api/caff_api.dart';
 part 'api/caff_comment_api.dart';
 part 'api/user_api.dart';
-
+part 'api_client.dart';
+part 'api_exception.dart';
+part 'api_helper.dart';
+part 'auth/api_key_auth.dart';
+part 'auth/authentication.dart';
+part 'auth/http_basic_auth.dart';
+part 'auth/http_bearer_auth.dart';
+part 'auth/oauth.dart';
 part 'model/caff_comment_response.dart';
 part 'model/caff_response.dart';
 part 'model/caff_upload_request.dart';
@@ -38,7 +37,6 @@ part 'model/login_request.dart';
 part 'model/make_admin_request.dart';
 part 'model/register_request.dart';
 part 'model/user_response.dart';
-
 
 const _delimiters = {'csv': ',', 'ssv': ' ', 'tsv': '\t', 'pipes': '|'};
 const _dateEpochMarker = 'epoch';

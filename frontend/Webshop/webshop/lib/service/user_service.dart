@@ -1,5 +1,6 @@
 import 'package:api/api.dart';
 
+import '../models/user.dart';
 import '../repository/app_content.dart';
 import '../repository/user_repository.dart';
 
@@ -47,6 +48,14 @@ class UserService {
   Future<void> register(RegisterRequest profile) async {
     try {
       await _repo.registerProfile(profile);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<List<User>?> loadUsers() async {
+    try {
+      return await _repo.loadAllUser();
     } catch (e) {
       rethrow;
     }
