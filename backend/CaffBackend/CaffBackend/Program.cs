@@ -21,9 +21,6 @@ Log.Logger = new LoggerConfiguration()
     .ReadFrom.Configuration(logConfig)
     .CreateLogger();
 
-var caff = new CaffParser.Caff();
-caff.Test();
-
 try
 {
     Log.Information("Starting web application");
