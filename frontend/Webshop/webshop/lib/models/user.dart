@@ -3,7 +3,7 @@ import 'package:api/api.dart';
 enum Role { admin, user }
 
 class User {
-  final int? id;
+  final String? id;
   final String? name;
   final String? email;
   final Role role;
@@ -14,10 +14,11 @@ class User {
         id: profile.id,
         name: profile.name,
         email: profile.email,
+        role: profile.role,
       );
 
   factory User.fromUserResponse(UserResponse userResponse) => User(
-        id: userResponse.id as int,
+        id: userResponse.id,
         name: userResponse.userName,
         email: userResponse.email,
       );

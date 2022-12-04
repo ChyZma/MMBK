@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.IO.Compression;
+using System.Net;
 
 namespace CaffBackend.Controllers
 {
@@ -22,18 +23,18 @@ namespace CaffBackend.Controllers
         }
 
         [HttpPost]
-        public IActionResult UploadCaff([FromForm] List<CaffUploadRequest> files)
+        public IActionResult UploadCaff([FromForm] CaffUploadRequest formData)
         {
             try
             {
-                var f = files.First();
+                var f = formData.Files.First();   
                 using (var memoryStream = new MemoryStream())
                 {
-                    f.File.CopyTo(memoryStream);
+                    f.CopyTo(memoryStream);
                     var file = new CaffFile
                     {
                         FileContent = memoryStream.ToArray(),
-                        FileName = f.File.FileName,
+                        FileName = f.FileName,
                     };
 
                     _caffManager.UploadCaff(file);

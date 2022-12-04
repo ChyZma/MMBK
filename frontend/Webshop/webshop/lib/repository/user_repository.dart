@@ -33,8 +33,8 @@ class UserRepository {
     await _secureStore.deleteToken();
   }
 
-  Future<void> deleteProfile(int id) async {
-    await _api.apiUserIdDelete(id.toString());
+  Future<void> deleteProfile(String id) async {
+    await _api.apiUserIdDelete(id);
   }
 
   Future<void> registerProfile(RegisterRequest profile) async {
@@ -57,10 +57,11 @@ class UserRepository {
 
   Role _parseToken(String token) {
     Map<String, dynamic> payload = Jwt.parseJwt(token);
-    switch (payload['role']) {
-      case 'User':
+    switch (
+        payload["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"]) {
+      case 'user':
         return Role.user;
-      case 'Admin':
+      case 'admin':
         return Role.admin;
     }
     return Role.user;
@@ -68,6 +69,6 @@ class UserRepository {
 
   Future<List<User>?> loadAllUser() async {
     var userResponseList = await _api.apiUserGet();
-    // return userResponseList.map((e) => User(id: e.id,))
+    return userResponseList!.map((e) => User.fromUserResponse(e)).toList();
   }
 }

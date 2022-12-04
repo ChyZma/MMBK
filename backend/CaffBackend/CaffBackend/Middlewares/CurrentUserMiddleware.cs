@@ -14,6 +14,7 @@ namespace CaffBackend.Middlewares
 
         public async Task InvokeAsync(HttpContext context, ICurrentUser currentUser)
         {
+            var request = context.Request;
             var user = context.User;
             if (user.Identity is not null && user.Identity.IsAuthenticated)
             {

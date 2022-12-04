@@ -6,6 +6,7 @@ import '../../../app/theme/color_palette.dart';
 import '../../../app/theme/fonts.dart';
 import '../../../core/app_scaffold.dart';
 import '../../../models/user.dart';
+import 'admin_content.dart';
 
 class ProfileTab extends StatefulWidget {
   final ProfileModel model;
@@ -38,18 +39,18 @@ class _ProfileTabState extends State<ProfileTab> {
         ),
         backgroundColor: ColorPalette.gray10,
       ),
-      body: SingleChildScrollView(
-        controller: _controller,
-        child: Column(
-          children: [
-            if (widget.model.user.value!.role == Role.user) ...[
-              ProfileContent(model: widget.model),
-            ] else if (widget.model.user.value!.role == Role.admin) ...[
-              // AdminProfileContent(model: widget.model)
-            ]
-          ],
-        ),
-      ),
+      body: widget.model.user.value!.role == Role.user
+          ? SingleChildScrollView(
+              controller: _controller,
+              child: Column(
+                children: [
+                  ProfileContent(model: widget.model),
+                ],
+              ),
+            )
+          : (widget.model.user.value!.role == Role.admin)
+              ? AdminContent(model: widget.model)
+              : Container(),
     );
   }
 }

@@ -51,7 +51,7 @@ class ProfileModel {
     }
   }
 
-  Future<void> deleteUser(int id) async {
+  Future<void> deleteUser(String id) async {
     if (uiHandler.isLoading) return;
 
     uiHandler.setLoading();
@@ -62,6 +62,14 @@ class ProfileModel {
       uiHandler.setError(e);
     } finally {
       uiHandler.setFinished();
+    }
+  }
+
+  Future<void> refresh() async {
+    try {
+      await _userService.loadUsers();
+    } catch (e) {
+      uiHandler.setError(e, retryCallback: refresh);
     }
   }
 }

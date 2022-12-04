@@ -35,7 +35,7 @@ class UserService {
     _content.user.value = null;
   }
 
-  Future deleteUser(int id) async {
+  Future deleteUser(String id) async {
     try {
       await _repo.deleteProfile(id);
       _content.user.value = null;
