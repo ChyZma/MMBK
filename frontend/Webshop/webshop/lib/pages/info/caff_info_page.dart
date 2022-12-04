@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../app/ioc.dart';
 import '../../app/theme/color_palette.dart';
+import '../../core/app_scaffold.dart';
 import '../../models/caff.dart';
 
 class CaffInfoPage extends StatefulWidget {
@@ -17,8 +18,7 @@ class _CaffInfoPageState extends State<CaffInfoPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
+    return AppScaffold(
       appBar: AppBar(
         leading: GestureDetector(
           onTap: () => IoC.router.pop(),

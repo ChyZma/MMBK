@@ -4,6 +4,8 @@ import 'package:webshop/app/theme/fonts.dart';
 import 'package:webshop/pages/home/shop_list/shop_list.dart';
 import 'package:webshop/pages/home/shop_list/shop_model.dart';
 
+import '../../../core/app_scaffold.dart';
+
 class ShopListTab extends StatelessWidget {
   final ShopModel model;
 
@@ -11,7 +13,8 @@ class ShopListTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return AppScaffold(
+        uiHandler: model.uiHandler,
         appBar: AppBar(
           title: const Center(
             child: Text(

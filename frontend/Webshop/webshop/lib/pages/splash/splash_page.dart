@@ -6,6 +6,7 @@ import '../../app/ioc.dart';
 import '../../app/theme/assets.dart';
 import '../../app/theme/color_palette.dart';
 import '../../app/theme/fonts.dart';
+import '../../core/app_scaffold.dart';
 import '../../widget/system_style.dart';
 
 class SplashPage extends StatefulWidget {
@@ -34,7 +35,7 @@ class _SplashPageState extends State<SplashPage>
   Widget build(BuildContext context) {
     return SystemStyle.light(
       systemNavigationBarColor: ColorPalette.transparent,
-      child: Scaffold(
+      child: AppScaffold(
           backgroundColor: ColorPalette.black,
           body: Stack(
             children: [

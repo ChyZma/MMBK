@@ -5,6 +5,7 @@ import '../../app/ioc.dart';
 import '../../app/theme/color_palette.dart';
 import '../../app/theme/fonts.dart';
 import '../../app/theme/sizes.dart';
+import '../../core/app_scaffold.dart';
 import '../../routing/app_route.dart';
 import '../../widget/button.dart';
 import '../../widget/system_style.dart';
@@ -29,10 +30,10 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
     return SystemStyle.light(
         systemNavigationBarColor: ColorPalette.transparent,
-        child: Scaffold(
+        child: AppScaffold(
+            uiHandler: model.uiHandler,
             backgroundColor: ColorPalette.black,
             body: Padding(
               padding: const EdgeInsets.all(Sizes.medium),

@@ -10,7 +10,6 @@
 
 part of openapi.api;
 
-
 class CaffApi {
   CaffApi([ApiClient? apiClient]) : apiClient = apiClient ?? defaultApiClient;
 
@@ -29,7 +28,6 @@ class CaffApi {
     final formParams = <String, String>{};
 
     const contentTypes = <String>[];
-
 
     return apiClient.invokeAPI(
       path,
@@ -50,12 +48,13 @@ class CaffApi {
     // When a remote server returns no body with a status of 204, we shall not decode it.
     // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
     // FormatException when trying to decode an empty string.
-    if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
+    if (response.body.isNotEmpty &&
+        response.statusCode != HttpStatus.noContent) {
       final responseBody = await _decodeBodyBytes(response);
-      return (await apiClient.deserializeAsync(responseBody, 'List<CaffResponse>') as List)
-        .cast<CaffResponse>()
-        .toList();
-
+      return (await apiClient.deserializeAsync(
+              responseBody, 'List<CaffResponse>') as List)
+          .cast<CaffResponse>()
+          .toList();
     }
     return null;
   }
@@ -64,10 +63,11 @@ class CaffApi {
   /// Parameters:
   ///
   /// * [int] id (required):
-  Future<Response> apiCaffIdDeleteWithHttpInfo(int id,) async {
+  Future<Response> apiCaffIdDeleteWithHttpInfo(
+    int id,
+  ) async {
     // ignore: prefer_const_declarations
-    final path = r'/api/Caff/{id}'
-      .replaceAll('{id}', id.toString());
+    final path = r'/api/Caff/{id}'.replaceAll('{id}', id.toString());
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -77,7 +77,6 @@ class CaffApi {
     final formParams = <String, String>{};
 
     const contentTypes = <String>[];
-
 
     return apiClient.invokeAPI(
       path,
@@ -93,8 +92,12 @@ class CaffApi {
   /// Parameters:
   ///
   /// * [int] id (required):
-  Future<void> apiCaffIdDelete(int id,) async {
-    final response = await apiCaffIdDeleteWithHttpInfo(id,);
+  Future<void> apiCaffIdDelete(
+    int id,
+  ) async {
+    final response = await apiCaffIdDeleteWithHttpInfo(
+      id,
+    );
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -104,10 +107,11 @@ class CaffApi {
   /// Parameters:
   ///
   /// * [int] id (required):
-  Future<Response> apiCaffIdGetWithHttpInfo(int id,) async {
+  Future<Response> apiCaffIdGetWithHttpInfo(
+    int id,
+  ) async {
     // ignore: prefer_const_declarations
-    final path = r'/api/Caff/{id}'
-      .replaceAll('{id}', id.toString());
+    final path = r'/api/Caff/{id}'.replaceAll('{id}', id.toString());
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -117,7 +121,6 @@ class CaffApi {
     final formParams = <String, String>{};
 
     const contentTypes = <String>[];
-
 
     return apiClient.invokeAPI(
       path,
@@ -133,8 +136,12 @@ class CaffApi {
   /// Parameters:
   ///
   /// * [int] id (required):
-  Future<void> apiCaffIdGet(int id,) async {
-    final response = await apiCaffIdGetWithHttpInfo(id,);
+  Future<void> apiCaffIdGet(
+    int id,
+  ) async {
+    final response = await apiCaffIdGetWithHttpInfo(
+      id,
+    );
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -144,10 +151,11 @@ class CaffApi {
   /// Parameters:
   ///
   /// * [int] id (required):
-  Future<Response> apiCaffIdPreviewGetWithHttpInfo(int id,) async {
+  Future<Response> apiCaffIdPreviewGetWithHttpInfo(
+    int id,
+  ) async {
     // ignore: prefer_const_declarations
-    final path = r'/api/Caff/{id}/preview'
-      .replaceAll('{id}', id.toString());
+    final path = r'/api/Caff/{id}/preview'.replaceAll('{id}', id.toString());
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -157,7 +165,6 @@ class CaffApi {
     final formParams = <String, String>{};
 
     const contentTypes = <String>[];
-
 
     return apiClient.invokeAPI(
       path,
@@ -173,8 +180,12 @@ class CaffApi {
   /// Parameters:
   ///
   /// * [int] id (required):
-  Future<void> apiCaffIdPreviewGet(int id,) async {
-    final response = await apiCaffIdPreviewGetWithHttpInfo(id,);
+  Future<void> apiCaffIdPreviewGet(
+    int id,
+  ) async {
+    final response = await apiCaffIdPreviewGetWithHttpInfo(
+      id,
+    );
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -184,19 +195,24 @@ class CaffApi {
   /// Parameters:
   ///
   /// * [CaffUploadRequest] caffUploadRequest:
-  Future<Response> apiCaffPostWithHttpInfo({ CaffUploadRequest? caffUploadRequest, }) async {
+  Future<Response> apiCaffPostWithHttpInfo({
+    MultipartFile? multipartFile,
+  }) async {
     // ignore: prefer_const_declarations
     final path = r'/api/Caff';
 
     // ignore: prefer_final_locals
-    Object? postBody = caffUploadRequest;
+    Object? postBody = multipartFile;
 
     final queryParams = <QueryParam>[];
     final headerParams = <String, String>{};
     final formParams = <String, String>{};
 
-    const contentTypes = <String>['application/json', 'text/json', 'application/_*+json'];
-
+    const contentTypes = <String>[
+      'application/json',
+      'text/json',
+      'application/_*+json'
+    ];
 
     return apiClient.invokeAPI(
       path,
@@ -212,8 +228,12 @@ class CaffApi {
   /// Parameters:
   ///
   /// * [CaffUploadRequest] caffUploadRequest:
-  Future<void> apiCaffPost({ CaffUploadRequest? caffUploadRequest, }) async {
-    final response = await apiCaffPostWithHttpInfo( caffUploadRequest: caffUploadRequest, );
+  Future<void> apiCaffPost({
+    MultipartFile? multipartFile,
+  }) async {
+    final response = await apiCaffPostWithHttpInfo(
+      multipartFile: multipartFile,
+    );
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }

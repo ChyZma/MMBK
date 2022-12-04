@@ -6,6 +6,7 @@ import 'package:webshop/widget/gaps.dart';
 import '../../app/ioc.dart';
 import '../../app/theme/color_palette.dart';
 import '../../app/theme/sizes.dart';
+import '../../core/app_scaffold.dart';
 import '../../core/display.dart';
 import '../../util/validation.dart';
 import '../../widget/button.dart';
@@ -43,7 +44,8 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget build(BuildContext context) {
     return SystemStyle.light(
       systemNavigationBarColor: ColorPalette.transparent,
-      child: Scaffold(
+      child: AppScaffold(
+        uiHandler: model.uiHandler,
         backgroundColor: ColorPalette.black,
         body: Display.single(
             content: model.uiHandler.load,

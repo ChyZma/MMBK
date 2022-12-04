@@ -7,6 +7,7 @@ import 'package:webshop/pages/home/shop_list/shop_model.dart';
 import '../../app/ioc.dart';
 import '../../app/theme/assets.dart';
 import '../../app/theme/color_palette.dart';
+import '../../core/app_scaffold.dart';
 import '../../widget/system_style.dart';
 import 'owned_list/owned_list_model.dart';
 import 'owned_list/owned_list_tab.dart';
@@ -44,8 +45,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return SystemStyle.light(
       systemNavigationBarColor: ColorPalette.transparent,
-      child: Scaffold(
-        backgroundColor: ColorPalette.white,
+      child: AppScaffold(
         bottomNavigationBar: Container(
           decoration: const BoxDecoration(
               border:

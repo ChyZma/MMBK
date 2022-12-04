@@ -18,7 +18,7 @@ class CaffRepository {
     File file = File(path);
     var multi = http.MultipartFile.fromBytes('file', file.readAsBytesSync());
     var request = CaffUploadRequest(file: multi);
-    await _api.apiCaffPost(caffUploadRequest: request);
+    await _api.apiCaffPost(multipartFile: multi);
   }
 
   Future<void> deleteCaff(int id) async {

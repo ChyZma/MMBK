@@ -50,6 +50,11 @@ class _ProfileContentState extends State<ProfileContent> {
               ),
             if (widget.model.path != null) ...[
               Vgap.medium(),
+              Text(
+                widget.model.fileName,
+                style: Fonts.h5,
+              ),
+              Vgap.small(),
               Button.primary(
                 text: 'Caff feltöltése',
                 onPressed: () {

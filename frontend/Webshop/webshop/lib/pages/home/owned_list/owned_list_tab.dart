@@ -3,6 +3,7 @@ import 'package:webshop/pages/home/owned_list/owned_list.dart';
 
 import '../../../app/theme/color_palette.dart';
 import '../../../app/theme/fonts.dart';
+import '../../../core/app_scaffold.dart';
 import 'owned_list_model.dart';
 
 class OwnedListTab extends StatelessWidget {
@@ -12,7 +13,8 @@ class OwnedListTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return AppScaffold(
+      uiHandler: model.uiHandler,
       appBar: AppBar(
         title: const Center(
           child: Text(

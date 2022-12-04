@@ -9,16 +9,15 @@ paths:
         - Caff
       requestBody:
         content:
-          multipart/form-data:
+          application/json:
             schema:
-              type: object
-              properties:
-                File:
-                  type: string
-                  format: binary
-            encoding:
-              File:
-                style: form
+              $ref: '#/components/schemas/CaffUploadRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/CaffUploadRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/CaffUploadRequest'
       responses:
         '200':
           description: Success
@@ -277,6 +276,14 @@ components:
           nullable: true
         fileName:
           type: string
+          nullable: true
+      additionalProperties: false
+    CaffUploadRequest:
+      type: object
+      properties:
+        file:
+          type: string
+          format: binary
           nullable: true
       additionalProperties: false
     LoginRequest:

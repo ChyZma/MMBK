@@ -4,6 +4,7 @@ import 'package:webshop/pages/home/profile/profile_model.dart';
 
 import '../../../app/theme/color_palette.dart';
 import '../../../app/theme/fonts.dart';
+import '../../../core/app_scaffold.dart';
 
 class ProfileTab extends StatefulWidget {
   final ProfileModel model;
@@ -25,7 +26,8 @@ class _ProfileTabState extends State<ProfileTab> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return AppScaffold(
+      uiHandler: widget.model.uiHandler,
       appBar: AppBar(
         title: const Center(
           child: Text(
