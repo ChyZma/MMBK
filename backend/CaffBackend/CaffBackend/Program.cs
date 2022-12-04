@@ -131,7 +131,7 @@ try
             var r2 = userManager.AddToRolesAsync(admin, roles).Result;
 
             var r3 = userManager.AddPasswordAsync(user, "asdf1234A.").Result;
-            var r4 = userManager.AddToRoleAsync(admin, UserRoleConstants.User).Result;
+            var r4 = userManager.AddToRoleAsync(user, UserRoleConstants.User).Result;
         }
     }
 
