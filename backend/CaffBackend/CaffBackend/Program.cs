@@ -27,9 +27,9 @@ try
 {
     Log.Information("Starting web application");
     var builder = WebApplication.CreateBuilder(args);
-    
+
     builder.Host.UseSerilog();
-    
+
     // Add services to the container.
     ConfigurationManager configuration = builder.Configuration;
     builder.Services.AddControllers();
@@ -110,6 +110,32 @@ try
             //add roles
             context.Roles.Add(new IdentityRole { Name = UserRoleConstants.Admin, NormalizedName = UserRoleConstants.Admin.ToUpper() });
             context.Roles.Add(new IdentityRole { Name = UserRoleConstants.User, NormalizedName = UserRoleConstants.User.ToUpper() });
+            var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+            //add admin
+            var admin = new User
+            {
+                UserName = "admin",
+                Email = "admin@admin.admin"
+            };
+
+            var addAdminResult = userManager.CreateAsync(admin, "asdf1234A.").Result;
+            if (addAdminResult.Succeeded)
+            {
+                userManager.AddToRoleAsync(admin, UserRoleConstants.Admin).Wait();
+            };
+
+            //add user
+            var user = new User
+            {
+                UserName = "bence",
+                Email = "user@user@user"
+            };
+
+            var addUserResult = userManager.CreateAsync(user, "asdf1234A.").Result;
+            if (addUserResult.Succeeded)
+            {
+                userManager.AddToRoleAsync(admin, UserRoleConstants.User).Wait();
+            };
         }
     }
 
