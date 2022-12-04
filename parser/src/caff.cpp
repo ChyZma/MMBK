@@ -229,3 +229,9 @@ u16 Caff::generateMeta(std::string path) {
   }
   return 0;
 }
+
+extern "C" Caff *Caff_Create(const char *path) {
+  return new Caff(std::string(path));
+}
+extern "C" u16 Caff_Loadfile(Caff *c) { return c->loadFile(); }
+extern "C" u16 Caff_Parse(Caff *c) { return c->parse(); }
