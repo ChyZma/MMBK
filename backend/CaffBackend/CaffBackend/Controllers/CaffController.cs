@@ -67,6 +67,10 @@ namespace CaffBackend.Controllers
                 _caffManager.DeleteCaff(id);
                 return Ok();
             }
+            catch (UnauthorizedAccessException e)
+            {
+                return Unauthorized(e.Message);
+            }
             catch (Exception e)
             {
                 return BadRequest(e.Message);
@@ -78,7 +82,15 @@ namespace CaffBackend.Controllers
         {
             try
             {
-                var result = _caffManager.ListCaffs();
+                var result = _caffManager
+                    .ListCaffs()
+                    .Select(c => new CaffResponse
+                    {
+                        Id = c.Id,
+                        FileName = c.FileName,
+                        Tags = c.Tags.Select(t => t.TagText).ToList(),
+                    });
+
                 return Ok(result);
             }
             catch (Exception e)

@@ -1,4 +1,5 @@
-﻿using BusinessLogic.Managers;
+﻿using BusinessLogic.Common;
+using BusinessLogic.Managers;
 
 namespace CaffBackend.Config
 {
@@ -8,6 +9,7 @@ namespace CaffBackend.Config
         {
             services.AddScoped<ICaffManager, CaffManager>();
             services.AddScoped<ICaffCommentManager, CaffCommentManager>();
+            services.AddScoped<ICurrentUser, CurrentUser>();
         }
     }
 }
