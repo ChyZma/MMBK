@@ -40,12 +40,12 @@ namespace BusinessLogic.Managers
         public CaffFile GetCaff(int id)
         {
             var caff = _context.CaffFiles
-                .Where(c => c.UploaderId == _currentUser.Id || _currentUser.IsAdmin)
+                .Where(c => c.UploaderId == _currentUser.Id || _currentUser.IsAdmin || c.Owners.Any(o => o.Id == _currentUser.Id))
                 .SingleOrDefault(c => c.Id == id);
 
             if (caff is null)
             {
-                throw new UnauthorizedAccessException("You do not have permission to delete this caff");
+                throw new UnauthorizedAccessException("You do not have permission to download this caff");
             }
 
             return caff;

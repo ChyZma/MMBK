@@ -1,4 +1,5 @@
-﻿using CaffBackend.Requests;
+﻿using BusinessLogic.Common;
+using CaffBackend.Requests;
 using CaffBackend.Responses;
 using DataAccess.Constants;
 using DataAccess.Entities;
@@ -26,7 +27,7 @@ namespace CaffBackend.Controllers
             _userManager = userManager;
             _configuration = configuration;
         }
-        
+
         [AllowAnonymous]
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterRequest request)
@@ -43,7 +44,7 @@ namespace CaffBackend.Controllers
                 SecurityStamp = Guid.NewGuid().ToString(),
                 UserName = request.UserName,
             };
-            
+
             var result = await _userManager.CreateAsync(user, request.Password);
             if (!result.Succeeded)
             {
@@ -94,7 +95,7 @@ namespace CaffBackend.Controllers
         }
 
         [HttpPost("make-admin")]
-        //[Authorize(Roles = UserRoleConstants.Admin)]
+        [Authorize(Roles = UserRoleConstants.Admin)]
         public async Task<IActionResult> MakeAdmin([FromBody] MakeAdminRequest request)
         {
             var user = await _userManager.FindByIdAsync(request.UserId);
@@ -109,15 +110,45 @@ namespace CaffBackend.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = UserRoleConstants.Admin)]
         public IActionResult DeleteUser(string id)
         {
-            return Ok();
+            var currentUser = HttpContext.User;
+
+            var userToDelete = _userManager.FindByIdAsync(id).Result;
+
+            if (userToDelete == null)
+            {
+                return StatusCode(404, "User not found!");
+            }
+
+            if (_userManager.IsInRoleAsync(userToDelete, UserRoleConstants.Admin).Result)
+            {
+                return StatusCode(403, "You are not authorized to delete admins!");
+            }
+
+            if (currentUser.Identity is not null && userToDelete.UserName == currentUser.Identity.Name)
+            {
+                return StatusCode(403, "You cannot delete yourself!");
+            }
+
+            _userManager.DeleteAsync(userToDelete);
+            return Ok("User deleted successfully!");
         }
 
-        [HttpGet]        
+        [HttpGet]
+        [Authorize(Roles = UserRoleConstants.Admin)]
         public ActionResult<List<UserResponse>> ListAllUsers()
         {
-            return Ok();
+            return _userManager.Users
+                .Select(u => new UserResponse
+                {
+                    Id = u.Id,
+                    UserName = u.UserName,
+                    Email = u.Email,
+                    Roles = _userManager.GetRolesAsync(u).Result.ToList()
+                })
+                .ToList();
         }
 
     }
