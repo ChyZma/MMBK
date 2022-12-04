@@ -56,7 +56,9 @@ u16 Ciff::parse() {
   std::string segment;
   while (std::getline(tags_stream, segment, '\0')) {
     this->tags.push_back(segment);
+    this->s_tags += segment + ",";
   }
+  s_tags[s_tags.length() - 1] = '\0';
 
   u64 content_offset = header_size;
   std::vector<byte> content(bytes.begin() + content_offset,

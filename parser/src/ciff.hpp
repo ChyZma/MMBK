@@ -44,8 +44,8 @@ public:
   u64 width = 0;
   u64 height = 0;
   std::string caption = "";
+  std::string s_tags = "";
   std::vector<std::string> tags;
-
   u16 parse();
   Image image;
 };

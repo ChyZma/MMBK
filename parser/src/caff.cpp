@@ -1,6 +1,7 @@
 #include "caff.hpp"
 #include "gif.h"
 #include <ostream>
+#include <vector>
 
 Caff::Caff(std::string path) { this->path = path; }
 u16 Caff::loadFile() {
@@ -228,4 +229,50 @@ u16 Caff::generateMeta(std::string path) {
     return 32;
   }
   return 0;
+}
+
+extern "C" Caff *Caff_Create(const char *path) {
+  return new Caff(std::string(path));
+}
+extern "C" u16 Caff_Loadfile(Caff *c) { return c->loadFile(); }
+extern "C" u16 Caff_Parse(Caff *c) { return c->parse(); }
+extern "C" u16 __Caff_GenerateGif__(Caff *c, const char *path) {
+  return c->generateGif(std::string(path));
+}
+
+extern "C" u32 Caff_GetCreditsYear(Caff *c) { return c->credits.year; }
+extern "C" u16 Caff_GetCreditsMonth(Caff *c) { return c->credits.month; }
+extern "C" u16 Caff_GetCreditsDay(Caff *c) { return c->credits.day; }
+extern "C" u16 Caff_GetCreditsHour(Caff *c) { return c->credits.hour; }
+extern "C" u16 Caff_GetCreditsMinute(Caff *c) { return c->credits.minute; }
+extern "C" void __Caff_GetCreditsCreator__(Caff *c, char *str) {
+  std::string creator = c->credits.creator.c_str();
+
+  creator = creator.substr(0, c->credits.creator_len + 1);
+
+  std::copy(creator.begin(), creator.end(), str);
+
+  str[std::min((int)c->credits.creator_len, (int)creator.size())] = 0;
+}
+
+extern "C" void __Caff_GetCaption__(Caff *c, char *str) {
+  std::string caption = c->ciffs[0].caption.c_str();
+  int len = c->ciffs[0].caption.length();
+
+  caption = caption.substr(0, len + 1);
+
+  std::copy(caption.begin(), caption.end(), str);
+
+  str[std::min(len, (int)caption.size())] = 0;
+}
+
+extern "C" void __Caff_GetTagsString__(Caff *c, char *str) {
+  std::string tags_string = c->ciffs[0].s_tags.c_str();
+  int len = c->ciffs[0].s_tags.length();
+
+  tags_string = tags_string.substr(0, len + 1);
+
+  std::copy(tags_string.begin(), tags_string.end(), str);
+
+  str[std::min(len, (int)tags_string.size())] = 0;
 }
