@@ -3,6 +3,7 @@ using BusinessLogic.Services;
 using DataAccess;
 using DataAccess.Entities;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 
 namespace BusinessLogic.Managers
 {
@@ -73,16 +74,30 @@ namespace BusinessLogic.Managers
 
         public void UploadCaff(CaffFile caffFile)
         {
-            //TODO: CALL PARSER HERE
-            var dummyTags = new List<Tag>
+            // Ensure `tmp` directory exists
+            if(!Directory.Exists("tmp"))
+                Directory.CreateDirectory("tmp");
+
+            // Parse file from temporary disk location
+            using var writer = new BinaryWriter(File.OpenWrite($"tmp/{caffFile.Id}.caff"));
+            writer.Write(caffFile.FileContent);
+            var caff = new CaffParser.Caff($"tmp/{caffFile.Id}.caff");
+            File.Delete($"tmp/{caffFile.Id}.caff");
+
+            // Create tags
+            var tags = new List<Tag>();
+            foreach (var tag in caff.Tags)
             {
-                new Tag { TagText = "dummy" },
-                new Tag { TagText = "dummy2" },
-            };
-            caffFile.Tags = dummyTags;
-            //read example gif from disk
-            var preview = File.ReadAllBytes(@"example.gif");
+                tags.Add(new Tag {TagText = tag});
+            }
+            caffFile.Tags = tags;
+
+            // Load gif from temporary disk location
+            caff.GenerateGif($"tmp/{caffFile.Id}.gif");
+            var preview = File.ReadAllBytes($"tmp/{caffFile.Id}.gif");
             caffFile.Preview = preview;
+            File.Delete($"tmp/{caffFile.Id}.gif");
+
             caffFile.UploaderId = _context.Users.First().Id;
             _context.CaffFiles.Add(caffFile);
             _context.SaveChanges();
