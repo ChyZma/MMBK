@@ -12,6 +12,7 @@ using System.Diagnostics.Contracts;
 using CaffBackend.Middlewares;
 using Microsoft.Extensions.Logging;
 using Serilog;
+using System.Data;
 
 var logConfig = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json")
@@ -107,35 +108,32 @@ try
         {
             var context = scope.ServiceProvider.GetRequiredService<CaffContext>();
             context.Database.EnsureCreated();
-            //add roles
-            context.Roles.Add(new IdentityRole { Name = UserRoleConstants.Admin, NormalizedName = UserRoleConstants.Admin.ToUpper() });
-            context.Roles.Add(new IdentityRole { Name = UserRoleConstants.User, NormalizedName = UserRoleConstants.User.ToUpper() });
+
             var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
-            //add admin
+
             var admin = new User
             {
                 UserName = "admin",
                 Email = "admin@admin.admin"
             };
 
-            var addAdminResult = userManager.CreateAsync(admin, "asdf1234A.").Result;
-            if (addAdminResult.Succeeded)
-            {
-                userManager.AddToRoleAsync(admin, UserRoleConstants.Admin).Wait();
-            };
-
-            //add user
             var user = new User
             {
                 UserName = "bence",
                 Email = "user@user@user"
             };
-
-            var addUserResult = userManager.CreateAsync(user, "asdf1234A.").Result;
-            if (addUserResult.Succeeded)
-            {
-                userManager.AddToRoleAsync(admin, UserRoleConstants.User).Wait();
+            context.Users.Add(admin);
+            context.Users.Add(user);
+            context.SaveChanges();
+            var r1 = userManager.AddPasswordAsync(admin, "asdf1234A.").Result;
+            var roles = new List<string> {
+                UserRoleConstants.Admin,
+                UserRoleConstants.User
             };
+            var r2 = userManager.AddToRolesAsync(admin, roles).Result;
+
+            var r3 = userManager.AddPasswordAsync(user, "asdf1234A.").Result;
+            var r4 = userManager.AddToRoleAsync(admin, UserRoleConstants.User).Result;
         }
     }
 
