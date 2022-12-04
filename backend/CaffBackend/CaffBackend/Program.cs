@@ -155,3 +155,6 @@ finally
 {
     Log.CloseAndFlush();
 }
+
+//Needed for integration testing
+public partial class Program { }
