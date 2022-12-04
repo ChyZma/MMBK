@@ -1,0 +1,11 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\backend",
+    "\\backend\\CaffBackend",
+    "\\backend\\CaffBackend\\BusinessLogic",
+    "\\backend\\CaffBackend\\BusinessLogic\\Managers"
+  ],
+  "SelectedNode": "\\backend\\CaffBackend\\BusinessLogic\\Managers\\CaffManager.cs",
+  "PreviewInSolutionExplorer": false
+}

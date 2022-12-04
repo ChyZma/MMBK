@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:webshop/api/api.dart';
 import 'package:webshop/core/ui_handler.dart';
 import 'package:webshop/pages/home/profile/profile_model.dart';
+import 'package:webshop/repository/caff_repository.dart';
 import 'package:webshop/repository/content_cache.dart';
 import 'package:webshop/repository/secure_store.dart';
 import 'package:webshop/service/auth_service.dart';
@@ -20,6 +21,7 @@ import '../repository/cache.dart';
 import '../repository/encrypted_store.dart';
 import '../repository/user_repository.dart';
 import '../routing/app_router.dart';
+import '../service/caff_service.dart';
 import '../service/content_service.dart';
 import '../service/platform_service.dart';
 import '../service/user_service.dart';
@@ -62,9 +64,11 @@ class IoC {
     GetIt.I.registerSingleton(UserRepository(get(), get(), get(), get()));
     GetIt.I.registerSingleton(UserService(get(), get()));
     GetIt.I.registerSingleton(ContentService(get(), get()));
+    GetIt.I.registerSingleton(CaffRepository(get()));
+    GetIt.I.registerSingleton(CaffService(get(), get()));
 
     GetIt.I.registerFactory(() => SplashModel(get(), get()));
-    GetIt.I.registerFactory(() => ProfileModel(get(), get()));
+    GetIt.I.registerFactory(() => ProfileModel(get(), get(), get()));
     GetIt.I.registerFactory(() => ShopModel(get(), get(), get()));
     GetIt.I.registerFactory(() => OwnedModel(get(), get(), get()));
     GetIt.I.registerFactory(() => LoginModel(get(), get(), get(), get()));
