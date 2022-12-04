@@ -21,15 +21,16 @@ Log.Logger = new LoggerConfiguration()
     .ReadFrom.Configuration(logConfig)
     .CreateLogger();
 
-
+var caff = new CaffParser.Caff();
+caff.Test();
 
 try
 {
     Log.Information("Starting web application");
     var builder = WebApplication.CreateBuilder(args);
-    
+
     builder.Host.UseSerilog();
-    
+
     // Add services to the container.
     ConfigurationManager configuration = builder.Configuration;
     builder.Services.AddControllers();

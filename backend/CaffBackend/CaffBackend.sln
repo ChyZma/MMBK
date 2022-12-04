@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLogic", "BusinessLo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\DataAccess.csproj", "{2CA3DF75-4055-4BBA-81AB-380E2AD7A34C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaffParser", "..\CaffParser\CaffParser\CaffParser.csproj", "{B9F8ECBD-4686-48A3-9DF6-9AF078AC04FB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{2CA3DF75-4055-4BBA-81AB-380E2AD7A34C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2CA3DF75-4055-4BBA-81AB-380E2AD7A34C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2CA3DF75-4055-4BBA-81AB-380E2AD7A34C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9F8ECBD-4686-48A3-9DF6-9AF078AC04FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9F8ECBD-4686-48A3-9DF6-9AF078AC04FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9F8ECBD-4686-48A3-9DF6-9AF078AC04FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9F8ECBD-4686-48A3-9DF6-9AF078AC04FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
