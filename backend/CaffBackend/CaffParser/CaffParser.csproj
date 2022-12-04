@@ -7,6 +7,9 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <None Update="1.caff">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
       <None Update="parser.dll">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
