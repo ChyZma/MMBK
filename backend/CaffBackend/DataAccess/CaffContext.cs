@@ -12,10 +12,9 @@ namespace DataAccess
         {
         }
 
-        public DbSet<CaffFile> CaffFiles { get; set; }
-        public DbSet<Comment> Comments { get; set; }
-        public DbSet<Tag> Tags { get; set; }
-        public DbSet<User> Users { get; set; }
+        public virtual DbSet<CaffFile> CaffFiles { get; set; }
+        public virtual DbSet<Comment> Comments { get; set; }
+        public virtual DbSet<Tag> Tags { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
