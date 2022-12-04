@@ -14,12 +14,10 @@ namespace BusinessLogic.Common
 {
     public class CurrentUser : ICurrentUser
     {
-        private readonly CaffContext _context;
         private readonly UserManager<User> _userManager;
 
-        public CurrentUser(CaffContext context, UserManager<User> userManager)
+        public CurrentUser(UserManager<User> userManager)
         {
-            _context = context;
             _userManager = userManager;
         }
 
