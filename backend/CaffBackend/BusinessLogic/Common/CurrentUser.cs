@@ -22,7 +22,7 @@ namespace BusinessLogic.Common
         }
 
         public bool IsAdmin { get; set; }
-        public string Id { get; set; }
+        public string Id { get; set; } = string.Empty;
 
         public void SetUser(ClaimsPrincipal user)
         {

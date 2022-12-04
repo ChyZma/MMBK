@@ -1,0 +1,13 @@
+#0
+C:/projects/moq4/src/Moq/SetupCollection.cs:107: warning: Thread Safety Violation
+  Read/Write race. Non-private method `SetupCollection.FindLast(...)` reads without synchronization from container `this.Moq.SetupCollection.setups` via call to `List`1<!0>.get_Count()`. Potentially races with write in method `SetupCollection.Clear()`.
+ Reporting because this access may occur on a background thread.
+
+#1
+D:/repos/NUnit/nunit3-vs-adapter/src/NUnitTestAdapter/NavigationDataProvider.cs:42: error: Pulse Resource Leak
+  Resource dynamically allocated by constructor NUnit.VisualStudio.TestAdapter.Metadata.DirectReflectionMetadataProvider() on line 42 is not closed after the last access at line 42, column 15.
+
+Found 2 issues
+                        Issue Type(ISSUED_TYPE_ID): #
+  Thread Safety Violation(THREAD_SAFETY_VIOLATION): 1
+          Pulse Resource Leak(PULSE_RESOURCE_LEAK): 1

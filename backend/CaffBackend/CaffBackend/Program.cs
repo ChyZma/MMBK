@@ -22,8 +22,6 @@ Log.Logger = new LoggerConfiguration()
     .ReadFrom.Configuration(logConfig)
     .CreateLogger();
 
-
-
 try
 {
     Log.Information("Starting web application");

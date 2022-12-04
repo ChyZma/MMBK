@@ -10,7 +10,7 @@ namespace DataAccess.Entities
         public int CaffFileId { get; set; }
         public string CommenterId { get; set; }
         
-        public CaffFile CaffFile { get; internal set; }
+        public CaffFile CaffFile { get; set; }
         public User Commenter { get; set; }
     }
 }
