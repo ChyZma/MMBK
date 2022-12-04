@@ -85,13 +85,13 @@ class Caff {
 private:
   std::string path;
   u64 num_anim = -1;
-  CaffCredits credits;
-  std::vector<Ciff> ciffs;
 
 public:
   Caff(std::string path);
   u16 loadFile();
   std::vector<byte> bytes;
+  std::vector<Ciff> ciffs;
+  CaffCredits credits;
   u16 parseBlock(std::vector<byte> block);
   u16 parse();
   u16 generateGif(std::string path);
