@@ -23,21 +23,20 @@ namespace CaffBackend.Controllers
         }
 
         [HttpPost]
-        public IActionResult UploadCaff([FromForm] CaffUploadRequest formData)
+        public IActionResult UploadCaff(IFormFile file)
         {
             try
             {
-                var f = formData.Files.First();   
                 using (var memoryStream = new MemoryStream())
                 {
-                    f.CopyTo(memoryStream);
-                    var file = new CaffFile
+                    file.CopyTo(memoryStream);
+                    var f = new CaffFile
                     {
                         FileContent = memoryStream.ToArray(),
-                        FileName = f.FileName,
+                        FileName = file.FileName,
                     };
 
-                    _caffManager.UploadCaff(file);
+                    _caffManager.UploadCaff(f);
                     return Ok();
                 }
             }
