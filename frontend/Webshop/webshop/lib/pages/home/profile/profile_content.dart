@@ -22,8 +22,8 @@ class ProfileContent extends StatefulWidget {
 class _ProfileContentState extends State<ProfileContent> {
   @override
   Widget build(BuildContext context) {
-    return Display.single(
-      content: widget.model.uiHandler.load,
+    return Display.multi(
+      contents: [widget.model.uiHandler.load, widget.model.user],
       builder: (_, __) {
         final user = widget.model.user.value!;
         return Padding(
@@ -60,6 +60,7 @@ class _ProfileContentState extends State<ProfileContent> {
                   Vgap.medium(),
                   Button.primary(
                     text: 'Caff feltöltése',
+                    loading: widget.model.uiHandler.isLoading,
                     onPressed: () {
                       widget.model.uploadCaff();
                     },

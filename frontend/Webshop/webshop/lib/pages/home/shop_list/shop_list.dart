@@ -25,11 +25,19 @@ class _ShopListState extends State<ShopList> {
   @override
   Widget build(BuildContext context) {
     if (content.value == null || content.value!.isEmpty) {
-      return const Center(
-        child: Text(
-          "Nincs elérhető CAFF",
-          style: Fonts.big,
-        ),
+      return Display.single(
+        content: content,
+        builder: (_, __) {
+          return PullToRefresh(
+            onRefresh: _model.onRefresh,
+            child: const Center(
+              child: Text(
+                "Nincs elérhető CAFF",
+                style: Fonts.big,
+              ),
+            ),
+          );
+        },
       );
     }
 

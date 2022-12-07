@@ -57,8 +57,8 @@ class UserRepository {
 
   Role _parseToken(String token) {
     Map<String, dynamic> payload = Jwt.parseJwt(token);
-    switch (
-        payload["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"]) {
+    switch (payload[
+        "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"]) {
       case 'user':
         return Role.user;
       case 'admin':
