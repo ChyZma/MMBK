@@ -42,11 +42,7 @@ class _ProfileTabState extends State<ProfileTab> {
       body: widget.model.user.value!.role == Role.user
           ? SingleChildScrollView(
               controller: _controller,
-              child: Column(
-                children: [
-                  ProfileContent(model: widget.model),
-                ],
-              ),
+              child: ProfileContent(model: widget.model),
             )
           : (widget.model.user.value!.role == Role.admin)
               ? AdminContent(model: widget.model)

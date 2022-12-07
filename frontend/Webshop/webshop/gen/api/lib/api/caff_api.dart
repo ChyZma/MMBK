@@ -180,7 +180,7 @@ class CaffApi {
   /// Parameters:
   ///
   /// * [int] id (required):
-  Future<void> apiCaffIdPreviewGet(
+  Future<Uint8List> apiCaffIdPreviewGet(
     int id,
   ) async {
     final response = await apiCaffIdPreviewGetWithHttpInfo(
@@ -189,6 +189,7 @@ class CaffApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
+    return response.bodyBytes;
   }
 
   /// Performs an HTTP 'POST /api/Caff' operation and returns the [Response].

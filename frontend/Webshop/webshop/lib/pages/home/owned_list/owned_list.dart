@@ -25,16 +25,19 @@ class _OwnedListState extends State<OwnedList> {
   @override
   Widget build(BuildContext context) {
     if (content.value == null || content.value!.isEmpty) {
-      return const Center(
-        child: SizedBox(
-          height: 200,
-          width: 200,
-          child: Text(
-            "Nincs megvásárolt CAFF",
-            style: Fonts.big,
-          ),
-        ),
-      );
+      return Display.single(
+          content: content,
+          builder: (context, __) {
+            return PullToRefresh(
+              onRefresh: _model.onRefresh,
+              child: const Center(
+                child: Text(
+                  "Nincs megvásárolt CAFF",
+                  style: Fonts.big,
+                ),
+              ),
+            );
+          });
     }
 
     return Display.single(

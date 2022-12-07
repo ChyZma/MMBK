@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:webshop/widget/gaps.dart';
 
 import '../../../app/ioc.dart';
+import '../../../app/theme/color_palette.dart';
+import '../../../app/theme/fonts.dart';
 import '../../../models/caff.dart';
 import '../../../routing/app_route.dart';
 
@@ -17,8 +20,32 @@ class ShopListItem extends StatelessWidget {
         IoC.router.push(route);
       },
       child: Container(
-        color: Colors.yellow,
-        height: 260,
+        decoration: BoxDecoration(
+          color: ColorPalette.gray10,
+        ),
+        child: Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                model.name,
+              ),
+              const Vgap(8.0),
+              Row(
+                children: [
+                  for (var item in model.tags) ...[
+                    Text(
+                      item,
+                      style: Fonts.tiny,
+                    ),
+                    const Hgap(8.0),
+                  ]
+                ],
+              )
+            ],
+          ),
+        ),
       ),
     );
   }

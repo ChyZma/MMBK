@@ -19,9 +19,9 @@ class ProfileModel {
 
   Content<List<User>> get users => _content.userList;
 
-  String? path;
+  Content<String> path = Content();
 
-  String get fileName => path!.split('/').last;
+  String get fileName => path.value!.split('/').last;
 
   Future<void> logOut() async {
     if (uiHandler.isLoading) return;
@@ -40,13 +40,13 @@ class ProfileModel {
 
     uiHandler.setLoading();
     try {
-      if (path != null) {
-        await _caffService.uploadCaff(path!);
+      if (path.value != null) {
+        await _caffService.uploadCaff(path.value!);
       }
-      path = null;
     } catch (e) {
-      uiHandler.setError(e, retryCallback: uploadCaff);
+      uiHandler.setError(e);
     } finally {
+      path.value = null;
       uiHandler.setFinished();
     }
   }

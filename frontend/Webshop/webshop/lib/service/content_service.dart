@@ -1,14 +1,15 @@
 import 'package:webshop/service/user_service.dart';
 
 import '../app/logging.dart';
-import '../models/caff.dart';
 import '../repository/app_content.dart';
+import 'caff_service.dart';
 
 class ContentService {
   final AppContent _content;
   final UserService _userService;
+  final CaffService _caffService;
 
-  ContentService(this._content, this._userService);
+  ContentService(this._content, this._userService, this._caffService);
 
   Future<void> loadProfile() async {
     _content.user.value = null;
@@ -20,22 +21,18 @@ class ContentService {
     }
   }
 
-  //TODO
   Future<void> loadOwnedCaffs() async {
-    _content.ownedCaffs.value = [
-      Caff(0, '1. caff', []),
-      Caff(1, '2. caff', []),
-      Caff(2, '3. caff', []),
-    ];
+    _content.ownedCaffs.value = await _caffService.getAllCaffs();
+    if (_content.ownedCaffs.value != null) {
+      for (var item in _content.ownedCaffs.value!) {
+        item.gif = await _caffService.getPreview(item.id, item.name);
+      }
+    }
   }
 
   //TODO
   Future<void> loadShopCaffs() async {
-    _content.ownedCaffs.value = [
-      Caff(3, '4. caff', []),
-      Caff(4, '5. caff', []),
-      Caff(5, '6. caff', []),
-    ];
+    _content.shopCaffs.value = await _caffService.getAllCaffs();
   }
 
   Future<void> loadAllCaffs() async {

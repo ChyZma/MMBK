@@ -28,7 +28,9 @@ class SplashModel {
       retrying.value = false;
       await _contentService.loadProfile();
       _showLogin = !_contentService.loggedIn();
-      await _contentService.loadAllCaffs();
+      if (!_showLogin) {
+        await _contentService.loadAllCaffs();
+      }
       _finish();
     } catch (e) {
       retrying.value = true;

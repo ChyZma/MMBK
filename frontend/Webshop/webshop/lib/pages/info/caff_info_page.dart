@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:webshop/app/theme/fonts.dart';
+import 'package:webshop/widget/gaps.dart';
 
 import '../../app/ioc.dart';
+import '../../app/theme/assets.dart';
 import '../../app/theme/color_palette.dart';
+import '../../app/theme/sizes.dart';
 import '../../core/app_scaffold.dart';
 import '../../models/caff.dart';
 
@@ -27,7 +31,39 @@ class _CaffInfoPageState extends State<CaffInfoPage> {
         backgroundColor: ColorPalette.white,
         centerTitle: true,
       ),
-      body: Container(),
+      body: Padding(
+        padding: const EdgeInsets.all(Sizes.medium),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            (_model.gif != null)
+                ? Container(
+                    height: 280,
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(image: MemoryImage(_model.gif!)),
+                    ),
+                  )
+                : const SizedBox(
+                    height: 280,
+                    child: Image(
+                      image: Assets.gifSuccess,
+                    ),
+                  ),
+            const Vgap(Sizes.medium),
+            Row(
+              children: [
+                Text(
+                  _model.name,
+                  style: Fonts.h4,
+                ),
+              ],
+            ),
+            const Vgap(Sizes.medium),
+            // const Text('Hozzászólások'),
+          ],
+        ),
+      ),
     );
   }
 }

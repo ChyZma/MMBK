@@ -12,7 +12,7 @@ class OwnedModel {
 
   OwnedModel(this._content, this._contentService, this.uiHandler);
 
-  Content<List<Caff>> get caffs => _content.shopCaffs;
+  Content<List<Caff>> get caffs => _content.ownedCaffs;
   // Content<User> get user => _content.user;
 
   Future<void> onRefresh() async {

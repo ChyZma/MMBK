@@ -62,10 +62,10 @@ class IoC {
 
     GetIt.I.registerSingleton(AuthService(get()));
     GetIt.I.registerSingleton(UserRepository(get(), get(), get(), get()));
+    GetIt.I.registerSingleton(CaffRepository(get(), get()));
     GetIt.I.registerSingleton(UserService(get(), get()));
-    GetIt.I.registerSingleton(ContentService(get(), get()));
-    GetIt.I.registerSingleton(CaffRepository(get()));
     GetIt.I.registerSingleton(CaffService(get(), get()));
+    GetIt.I.registerSingleton(ContentService(get(), get(), get()));
 
     GetIt.I.registerFactory(() => SplashModel(get(), get()));
     GetIt.I.registerFactory(() => ProfileModel(get(), get(), get(), get()));

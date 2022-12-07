@@ -112,13 +112,18 @@ try
             var admin = new User
             {
                 UserName = "admin",
-                Email = "admin@admin.admin"
+                Email = "admin@admin.admin",
+                NormalizedUserName = "ADMIN",
+                NormalizedEmail = "ADMIN@ADMIN.ADMIN"
             };
 
             var user = new User
             {
                 UserName = "bence",
-                Email = "user@user@user"
+                Email = "user@user@user",
+                NormalizedUserName="BENCE",
+                NormalizedEmail= "USER@USER@USER"
+             
             };
             context.Users.Add(admin);
             context.Users.Add(user);
