@@ -121,9 +121,14 @@ try
             {
                 UserName = "bence",
                 Email = "user@user@user",
+<<<<<<< HEAD
                 NormalizedUserName="BENCE",
                 NormalizedEmail= "USER@USER@USER"
              
+=======
+                NormalizedUserName = "BENCE",
+                NormalizedEmail = "USER@USER@USER"
+>>>>>>> a41920ec1a2e055439670f49204a5431958da84b
             };
             context.Users.Add(admin);
             context.Users.Add(user);

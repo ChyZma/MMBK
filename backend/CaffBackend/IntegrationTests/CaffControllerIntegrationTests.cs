@@ -2,6 +2,7 @@ using CaffBackend.Requests;
 using DataAccess.Constants;
 using DataAccess.Entities;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;
@@ -60,7 +61,11 @@ namespace IntegrationTests
         public void CallingAnyRequestWithoutAuthorizationTokenResultsIn401()
         {
             _client = _factory.CreateDefaultClient();
-            var response1 = _client.PostAsync("/api/caff", new StringContent("")).Result;
+            //a fake IFormFile object
+            var file = new FormFile(new MemoryStream(Encoding.UTF8.GetBytes("This is a dummy file")), 0, 0, "Data", "dummy.txt");
+            var content = new MultipartFormDataContent();
+            content.Add(new StreamContent(file.OpenReadStream()), "files", file.FileName);
+            var response1 = _client.PostAsync("/api/caff", content).Result;
             var response2 = _client.GetAsync($"/api/caff/{1}").Result;
             var response3 = _client.DeleteAsync($"/api/caff/{1}").Result;
             var response4 = _client.GetAsync("/api/caff").Result;
